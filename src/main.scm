@@ -24,7 +24,7 @@
                           20
                           20 
                           30 
-                          (get-color 666666))
+                          (get-color 16777215))
                (end-drawing)
                (main-loop)))))
 
