@@ -16,7 +16,10 @@ set( CMAKE_Gambit_COMPILE_OBJECT
 # How to build executables 
 set( CMAKE_Gambit_LINK_EXECUTABLE 
     # "<CMAKE_Gambit_COMPILER> -o <TARGET>_link.c <OBJECTS>"
-    "<CMAKE_Gambit_COMPILER> -verbose -o <TARGET> -exe <OBJECTS>"
+    "<CMAKE_Gambit_COMPILER> -verbose \
+                             -cc-options \"-Wl,-rpath,${CMAKE_BINARY_DIR}/extern/raylib/src -lraylib\" \
+                             -o <TARGET> \
+                             -exe <OBJECTS>"
 )
 
     # "<CMAKE_GAMBIT_COMPILER> -obj"

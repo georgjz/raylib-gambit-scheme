@@ -1,5 +1,5 @@
 ;;; A simple module that interfaces raylib functions 
-(##supply-module raylib-test)
+; (##supply-module raylib-test)
 
 ;;; Include raylib
 (c-declare #<<c-declare-end

@@ -10,10 +10,11 @@ project( raylib-gambit-scheme
     DESCRIPTION "A simple Gambit Scheme binding for raylib" )
 
 # Add external dependencies to project
-# add_subdirectory( extern ) 
+add_subdirectory( extern ) 
 
 # Build simple Gambit Scheme program
-list( APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list( APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" )
 enable_language( Gambit )
 add_executable( ${PROJECT_NAME} "" )
+# target_link_libraries( ${PROJECT_NAME} raylib )
 add_subdirectory( src )
