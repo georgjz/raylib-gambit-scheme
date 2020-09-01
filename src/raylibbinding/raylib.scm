@@ -11,6 +11,16 @@
 c-declare-end
 )
 
+;    ▄████████     ███        ▄████████ ███    █▄   ▄████████     ███     
+;   ███    ███ ▀█████████▄   ███    ███ ███    ███ ███    ███ ▀█████████▄ 
+;   ███    █▀     ▀███▀▀██   ███    ███ ███    ███ ███    █▀     ▀███▀▀██ 
+;   ███            ███   ▀  ▄███▄▄▄▄██▀ ███    ███ ███            ███   ▀ 
+; ▀███████████     ███     ▀▀███▀▀▀▀▀   ███    ███ ███            ███     
+;          ███     ███     ▀███████████ ███    ███ ███    █▄      ███     
+;    ▄█    ███     ███       ███    ███ ███    ███ ███    ███     ███     
+;  ▄████████▀     ▄████▀     ███    ███ ████████▀  ████████▀     ▄████▀   
+;                            ███    ███                                   
+
 ;;; Structure definitions
 (c-define-type color              "Color")
 (c-define-type vector2            "Vector2")
@@ -49,28 +59,17 @@ c-declare-end
 (c-define-type music              "Music")
 (c-define-type vr-device-info     "vrDeviceInfo")
 
-;           _____                   _______                   _____                    _____          
-;          /\    \                 /::\    \                 /\    \                  /\    \         
-;         /::\    \               /::::\    \               /::\    \                /::\    \        
-;        /::::\    \             /::::::\    \             /::::\    \              /::::\    \       
-;       /::::::\    \           /::::::::\    \           /::::::\    \            /::::::\    \      
-;      /:::/\:::\    \         /:::/~~\:::\    \         /:::/\:::\    \          /:::/\:::\    \     
-;     /:::/  \:::\    \       /:::/    \:::\    \       /:::/__\:::\    \        /:::/__\:::\    \    
-;    /:::/    \:::\    \     /:::/    / \:::\    \     /::::\   \:::\    \      /::::\   \:::\    \   
-;   /:::/    / \:::\    \   /:::/____/   \:::\____\   /::::::\   \:::\    \    /::::::\   \:::\    \  
-;  /:::/    /   \:::\    \ |:::|    |     |:::|    | /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \ 
-; /:::/____/     \:::\____\|:::|____|     |:::|    |/:::/  \:::\   \:::|    |/:::/__\:::\   \:::\____\
-; \:::\    \      \::/    / \:::\    \   /:::/    / \::/   |::::\  /:::|____|\:::\   \:::\   \::/    /
-;  \:::\    \      \/____/   \:::\    \ /:::/    /   \/____|:::::\/:::/    /  \:::\   \:::\   \/____/ 
-;   \:::\    \                \:::\    /:::/    /          |:::::::::/    /    \:::\   \:::\    \     
-;    \:::\    \                \:::\__/:::/    /           |::|\::::/    /      \:::\   \:::\____\    
-;     \:::\    \                \::::::::/    /            |::| \::/____/        \:::\   \::/    /    
-;      \:::\    \                \::::::/    /             |::|  ~|               \:::\   \/____/     
-;       \:::\    \                \::::/    /              |::|   |                \:::\    \         
-;        \:::\____\                \::/____/               \::|   |                 \:::\____\        
-;         \::/    /                 ~~                      \:|   |                  \::/    /        
-;          \/____/                                           \|___|                   \/____/         
-                                                                                                    
+
+;  ▄████████  ▄██████▄     ▄████████    ▄████████ 
+; ███    ███ ███    ███   ███    ███   ███    ███ 
+; ███    █▀  ███    ███   ███    ███   ███    █▀  
+; ███        ███    ███  ▄███▄▄▄▄██▀  ▄███▄▄▄     
+; ███        ███    ███ ▀▀███▀▀▀▀▀   ▀▀███▀▀▀     
+; ███    █▄  ███    ███ ▀███████████   ███    █▄  
+; ███    ███ ███    ███   ███    ███   ███    ███ 
+; ████████▀   ▀██████▀    ███    ███   ██████████ 
+;                         ███    ███              
+     
 ;;;-----------------------------------------------------------------------------
 ;;; These are the functions defined in the core module of raylib.
 ;;;-----------------------------------------------------------------------------
@@ -773,3 +772,221 @@ c-declare-end
 (define set-camera-move-controls
   (c-lambda (int int int int int int)
     void "SetCameraMoveControls"))
+
+
+;    ▄████████    ▄█    █▄       ▄████████    ▄███████▄    ▄████████    ▄████████ 
+;   ███    ███   ███    ███     ███    ███   ███    ███   ███    ███   ███    ███ 
+;   ███    █▀    ███    ███     ███    ███   ███    ███   ███    █▀    ███    █▀  
+;   ███         ▄███▄▄▄▄███▄▄   ███    ███   ███    ███  ▄███▄▄▄       ███        
+; ▀███████████ ▀▀███▀▀▀▀███▀  ▀███████████ ▀█████████▀  ▀▀███▀▀▀     ▀███████████ 
+;          ███   ███    ███     ███    ███   ███          ███    █▄           ███ 
+;    ▄█    ███   ███    ███     ███    ███   ███          ███    ███    ▄█    ███ 
+;  ▄████████▀    ███    █▀      ███    █▀   ▄████▀        ██████████  ▄████████▀  
+
+;;;-----------------------------------------------------------------------------
+;;; These are the functions defined in the shapes module of raylib.
+;;;-----------------------------------------------------------------------------
+;;; Draw a pixel
+(define draw-pixel
+  (c-lambda (int int color)
+    void "DrawPixel"))
+
+;;; Draw a pixel (Vector version)
+(define draw-pixel-v
+  (c-lambda (vector2 color)
+    void "DrawPixelV"))
+
+;;; Draw a line
+(define draw-line
+  (c-lambda (int int int int color)
+    void "DrawLine"))
+
+;;; Draw a line (Vector version)
+(define draw-line-v
+  (c-lambda (vector2 vector2 color)
+    void "DrawLineV"))
+
+;;; Draw a line defining thickness
+(define draw-line-ex
+  (c-lambda (vector2 vector2 float color)
+    void "DrawLineEx"))
+
+;;; Draw a line using cubic-bezier curves in-out
+(define draw-line-bezier
+  (c-lambda (vector2 vector2 float color)
+    void "DrawLineBezier"))
+
+;;; Draw lines sequence
+(define draw-line-strip
+  (c-lambda ((pointer vector2) int color)
+    void "DrawLineStrip"))
+
+;;; Draw a color-filled circle
+(define draw-circle
+  (c-lambda (int int float color)
+    void "DrawCircle"))
+
+;;; Draw a piece of a circle
+(define draw-circle-sector
+  (c-lambda (vector2 float int int int color)
+    void "DrawCircleSector"))
+
+;;; Draw circle sector outline
+(define draw-circle-sector-lines
+  (c-lambda (vector2 float int int int color)
+    void "DrawCircleSectorLines"))
+
+;;; Draw a gradient-filled circle
+(define draw-circle-gradient
+  (c-lambda (int int float color color)
+    void "DrawCircleGradient"))
+
+;;; Draw a color-filled circle (Vector version)
+(define draw-circle-v
+  (c-lambda (vector2 float color)
+    void "DrawCircleV"))
+
+;;; Draw circle outline
+(define draw-circle-lines
+  (c-lambda (int int float color)
+    void "DrawCircleLines"))
+
+;;; Draw ellipse
+(define draw-ellipse
+  (c-lambda (int int float float color)
+    void "DrawEllipse"))
+
+;;; Draw ellipse outline
+(define draw-ellipse-lines
+  (c-lambda (int int float float color)
+    void "DrawEllipseLines"))
+
+;;; Draw ring
+(define draw-ring
+  (c-lambda (vector2 float float int int int color)
+    void "DrawRing"))
+
+;;; Draw ring outline
+(define draw-ring-lines
+  (c-lambda (vector2 float float int int int color)
+    void "DrawRingLines"))
+
+;;; Draw a color-filled rectangle
+(define draw-rectangle
+  (c-lambda (int int int int color)
+    void "DrawRectangle"))
+
+;;; Draw a color-filled rectangle (Vector version)
+(define draw-rectangle-v
+  (c-lambda (vector2 vector2 color)
+    void "DrawRectangleV"))
+
+;;; Draw a color-filled rectangle
+(define draw-rectangle-rec
+  (c-lambda (rectangle color)
+    void "DrawRectangleRec"))
+
+;;; Draw a color-filled rectangle with pro parameters
+(define draw-rectangle-pro
+  (c-lambda (rectangle vector2 float color)
+    void "DrawRectanglePro"))
+
+;;; Draw a vertical-gradient-filled rectangle
+(define draw-rectangle-gradient-v
+  (c-lambda (int int int int color color)
+    void "DrawRectangleGradientV"))
+
+;;; Draw a horizontal-gradient-filled rectangle
+(define draw-rectangle-gradient-h
+  (c-lambda (int int int int color color)
+    void "DrawRectangleGradientH"))
+
+;;; Draw a gradient-filled rectangle with custom vertex colors
+(define draw-rectangle-gradient-ex
+  (c-lambda (rectangle color color color color)
+    void "DrawRectangleGradientEx"))
+
+;;; Draw rectangle outline
+(define draw-rectangle-lines
+  (c-lambda (int int int int color)
+    void "DrawRectangleLines"))
+
+;;; Draw rectangle outline with extended parameters
+(define draw-rectangle-lines-ex
+  (c-lambda (rectangle int color)
+    void "DrawRectangleLinesEx"))
+
+;;; Draw rectangle with rounded edges
+(define draw-rectangle-rounded
+  (c-lambda (rectangle float int color)
+    void "DrawRectangleRounded"))
+
+;;; Draw rectangle with rounded edges outline
+(define draw-rectangle-rounded-lines
+  (c-lambda (rectangle float int int color)
+    void "DrawRectangleRoundedLines"))
+
+;;; Draw a color-filled triangle (vertex in counter-clockwise order!)
+(define draw-triangle
+  (c-lambda (vector2 vector2 vector2 color)
+    void "DrawTriangle"))
+
+;;; Draw triangle outline (vertex in counter-clockwise order!)
+(define draw-triangle-lines
+  (c-lambda (vector2 vector2 vector2 color)
+    void "DrawTriangleLines"))
+
+;;; Draw a triangle fan defined by points (first vertex is the center)
+(define draw-triangle-fan
+  (c-lambda ((pointer vector2) int color)
+    void "DrawTriangleFan"))
+
+;;; Draw a triangle strip defined by points
+(define draw-triangle-strip
+  (c-lambda ((pointer vector2) int color)
+    void "DrawTriangleStrip"))
+
+;;; Draw a regular polygon (Vector version)
+(define draw-poly
+  (c-lambda (vector2 int float float color)
+    void "DrawPoly"))
+
+;;; Draw a polygon outline of n sides
+(define draw-poly-lines
+  (c-lambda (vector2 int float float color)
+    void "DrawPolyLines"))
+
+;;; Check collision between two rectangles
+(define check-collision-recs
+  (c-lambda (rectangle rectangle)
+    bool "CheckCollisionRecs"))
+
+;;; Check collision between two circles
+(define check-collision-circles
+  (c-lambda (vector2 float vector2 float)
+    bool "CheckCollisionCircles"))
+
+;;; Check collision between circle and rectangle
+(define check-collision-circle-rec
+  (c-lambda (vector2 float rectangle)
+    bool "CheckCollisionCircleRec"))
+
+;;; Get collision rectangle for two rectangles collision
+(define get-collision-rec
+  (c-lambda (rectangle rectangle)
+    rectangle "GetCollisionRec"))
+
+;;; Check if point is inside rectangle
+(define check-collision-point-rec
+  (c-lambda (vector2 rectangle)
+    bool "CheckCollisionPointRec"))
+
+;;; Check if point is inside circle
+(define check-collision-point-circle
+  (c-lambda (vector2 vector2 float)
+    bool "CheckCollisionPointCircle"))
+
+;;; Check if point is inside a triangle
+(define check-collision-point-triangle
+  (c-lambda (vector2 vector2 vector2 vector2)
+    bool "CheckCollisionPointTriangle"))
