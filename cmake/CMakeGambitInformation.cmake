@@ -22,8 +22,6 @@ set( CMAKE_Gambit_LINK_EXECUTABLE
                              -exe <OBJECTS>"
 )
 
-    # "<CMAKE_GAMBIT_COMPILER> -obj"
-# endif()
 
 set( CMAKE_Gambit_INFORMATION_LOADED 1 )
 
