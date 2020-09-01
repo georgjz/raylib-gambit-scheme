@@ -1,8 +1,7 @@
 ;;;-----------------------------------------------------------------------------
-;;; This is the Raylib main file. It contains most of the important macros and 
-;;; data structures.
+;;; This is the Raylib main file. It contains most of the important macros,
+;;; data structures, and function bindings.
 ;;;-----------------------------------------------------------------------------
-(##demand-module araylib)
 
 ;;; Include raylib header
 (c-declare #<<c-declare-end
@@ -13,11 +12,65 @@ c-declare-end
 )
 
 ;;; Structure definitions
-; (c-define-type color              "Color")
-; (c-define-type input-event-worker "InputEventWorker")
-; (c-define-type key-event-fifo     "KeyEventFifo")
-; (c-define-type )
+(c-define-type color              "Color")
+(c-define-type vector2            "Vector2")
+(c-define-type vector3            "Vector3")
+(c-define-type vector4            "Vector4")
+(c-define-type quaternion         "Quaternion")
+(c-define-type matrix             "Matrix")
+(c-define-type rectangle          "Rectangle")
+(c-define-type image              "Image")
+(c-define-type texture-2d         "Texture2D")
+(c-define-type texture            "Texture")
+(c-define-type tex-cube-map       "TexCubeMap")
+(c-define-type render-texture-2d  "RenderTexture2D")
+(c-define-type render-texture     "RenderTexture")
+(c-define-type n-patch-info       "NPatchInfo")
+(c-define-type font               "Font")
+(c-define-type sprite-font        "SpriteFont") 
+(c-define-type camera-3d          "Camera3D")
+(c-define-type camera             "Camera")
+(c-define-type camera-2d          "Camera2D")
+(c-define-type mesh               "Mesh")
+(c-define-type shader             "Shader")
+(c-define-type material-map       "MaterialMap")
+(c-define-type material           "Material")
+(c-define-type transform          "Transform")
+(c-define-type bone-info          "BoneInfo")
+(c-define-type model              "Model")
+(c-define-type model-animation    "ModelAnimation")
+(c-define-type ray                "Ray")
+(c-define-type ray-hit-info       "RayHitInfo")
+(c-define-type bounding-box       "BoundingBox")
+(c-define-type wave               "Wave")
+(c-define-type r-audio-buffer     "rAudioBuffer")
+(c-define-type audio-stream       "AudioStream")
+(c-define-type sound              "Sound")
+(c-define-type music              "Music")
+(c-define-type vr-device-info     "vrDeviceInfo")
 
+;           _____                   _______                   _____                    _____          
+;          /\    \                 /::\    \                 /\    \                  /\    \         
+;         /::\    \               /::::\    \               /::\    \                /::\    \        
+;        /::::\    \             /::::::\    \             /::::\    \              /::::\    \       
+;       /::::::\    \           /::::::::\    \           /::::::\    \            /::::::\    \      
+;      /:::/\:::\    \         /:::/~~\:::\    \         /:::/\:::\    \          /:::/\:::\    \     
+;     /:::/  \:::\    \       /:::/    \:::\    \       /:::/__\:::\    \        /:::/__\:::\    \    
+;    /:::/    \:::\    \     /:::/    / \:::\    \     /::::\   \:::\    \      /::::\   \:::\    \   
+;   /:::/    / \:::\    \   /:::/____/   \:::\____\   /::::::\   \:::\    \    /::::::\   \:::\    \  
+;  /:::/    /   \:::\    \ |:::|    |     |:::|    | /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \ 
+; /:::/____/     \:::\____\|:::|____|     |:::|    |/:::/  \:::\   \:::|    |/:::/__\:::\   \:::\____\
+; \:::\    \      \::/    / \:::\    \   /:::/    / \::/   |::::\  /:::|____|\:::\   \:::\   \::/    /
+;  \:::\    \      \/____/   \:::\    \ /:::/    /   \/____|:::::\/:::/    /  \:::\   \:::\   \/____/ 
+;   \:::\    \                \:::\    /:::/    /          |:::::::::/    /    \:::\   \:::\    \     
+;    \:::\    \                \:::\__/:::/    /           |::|\::::/    /      \:::\   \:::\____\    
+;     \:::\    \                \::::::::/    /            |::| \::/____/        \:::\   \::/    /    
+;      \:::\    \                \::::::/    /             |::|  ~|               \:::\   \/____/     
+;       \:::\    \                \::::/    /              |::|   |                \:::\    \         
+;        \:::\____\                \::/____/               \::|   |                 \:::\____\        
+;         \::/    /                 ~~                      \:|   |                  \::/    /        
+;          \/____/                                           \|___|                   \/____/         
+                                                                                                    
 ;;;-----------------------------------------------------------------------------
 ;;; These are the functions defined in the core module of raylib.
 ;;;-----------------------------------------------------------------------------
@@ -352,14 +405,14 @@ c-declare-end
     void "SetTraceLogExit"))
 
 ;;; BUG: (Callback type) Set a trace log callback to enable custom logging
-(define set-trace-log-callback
-  (c-lambda (TraceLogCallback)
-    void "SetTraceLogCallback"))
+; (define set-trace-log-callback
+;   (c-lambda (TraceLogCallback)
+;     void "SetTraceLogCallback"))
 
 ;;; BUG: (Argument count) Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR)
-(define trace-log
-  (c-lambda (int char-string)
-    void "TraceLog"))
+; (define trace-log
+;   (c-lambda (int char-string)
+;     void "TraceLog"))
 
 ;;; Takes a screenshot of current screen (saved a .png)
 (define take-screenshot
@@ -373,7 +426,7 @@ c-declare-end
 
 ;;; Load file data as byte array (read)
 (define load-file-data
-  (c-lambda (char-string int *)
+  (c-lambda (char-string (pointer int))
     (pointer unsigned-char) "LoadFileData"))
 
 ;;; Save data to file from byte array (write)
@@ -438,7 +491,7 @@ c-declare-end
 
 ;;; Get filenames in a directory path (memory should be freed)
 (define get-directory-files
-  (c-lambda (char-string int *)
+  (c-lambda (char-string (pointer int))
     (pointer (pointer char)) "GetDirectoryFiles"))
 
 ;;; Clear directory files paths buffers (free memory)
@@ -458,7 +511,7 @@ c-declare-end
 
 ;;; Get dropped files names (memory should be freed)
 (define get-dropped-files
-  (c-lambda (int *)
+  (c-lambda ((pointer int))
     (pointer (pointer char)) "GetDroppedFiles"))
 
 ;;; Clear dropped files paths buffer (free memory)
@@ -473,12 +526,12 @@ c-declare-end
 
 ;;; Compress data (DEFLATE algorythm)
 (define compress-data
-  (c-lambda ((pointer unsigned-char) int int *)
+  (c-lambda ((pointer unsigned-char) int (pointer int))
     (pointer unsigned-char) "CompressData"))
 
 ;;; Decompress data (DEFLATE algorythm)
 (define decompress-data
-  (c-lambda ((pointer unsigned-char) int int *)
+  (c-lambda ((pointer unsigned-char) int (pointer int))
     (pointer unsigned-char) "DecompressData"))
 
 ;;; Load integer value from storage file (from defined position)
@@ -720,4 +773,3 @@ c-declare-end
 (define set-camera-move-controls
   (c-lambda (int int int int int int)
     void "SetCameraMoveControls"))
-
