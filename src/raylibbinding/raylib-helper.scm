@@ -1,6 +1,7 @@
 ;;; These are helper functions to make using some of raylib's data strucutures 
 ;;; more convenient 
 
+;;; Create a new color
 (define make-color 
   (lambda (r g b a)
     (get-color 
@@ -8,3 +9,4 @@
                   (arithmetic-shift g 16)
                   (arithmetic-shift b 8)
                   a))))
+              
