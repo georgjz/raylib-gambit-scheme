@@ -36,6 +36,7 @@ c-declare-end
 (c-define-type render-texture-2d  "RenderTexture2D")
 (c-define-type render-texture     "RenderTexture")
 (c-define-type n-patch-info       "NPatchInfo")
+(c-define-type char-info          "CharInfo")
 (c-define-type font               "Font")
 (c-define-type sprite-font        "SpriteFont") 
 (c-define-type camera-3d          "Camera3D")
@@ -1409,3 +1410,196 @@ c-declare-end
 ; (define get-pixel-data-size
 ;   (c-lambda (int int int)
 ;     int "GetPixelDataSize"))
+
+
+;     ███        ▄████████ ▀████    ▐████▀     ███     
+; ▀█████████▄   ███    ███   ███▌   ████▀  ▀█████████▄ 
+;    ▀███▀▀██   ███    █▀     ███  ▐███       ▀███▀▀██ 
+;     ███   ▀  ▄███▄▄▄        ▀███▄███▀        ███   ▀ 
+;     ███     ▀▀███▀▀▀        ████▀██▄         ███     
+;     ███       ███    █▄    ▐███  ▀███        ███     
+;     ███       ███    ███  ▄███     ███▄      ███     
+;    ▄████▀     ██████████ ████       ███▄    ▄████▀   
+                                                     
+;;;-----------------------------------------------------------------------------
+;;; These are the functions defined in the text module of raylib.
+;;;-----------------------------------------------------------------------------
+;;; Get the default Font
+(define get-font-default
+  (c-lambda ()
+    font "GetFontDefault"))
+
+;;; Load font from file into GPU memory (VRAM)
+(define load-font
+  (c-lambda (char-string)
+    font "LoadFont"))
+
+;;; Load font from file with extended parameters
+(define load-font-ex
+  (c-lambda (char-string int (pointer int) int)
+    font "LoadFontEx"))
+
+;;; Load font from Image (XNA style)
+(define load-font-from-image
+  (c-lambda (image color int)
+    font "LoadFontFromImage"))
+
+;;; Load font data for further use
+(define load-font-data
+  (c-lambda (char-string int (pointer int) int int)
+    (pointer char-info) "LoadFontData"))
+
+;;; Generate image font atlas using chars info
+(define gen-image-font-atlas
+  (c-lambda ((pointer char-info) (pointer (pointer rectangle)) int int int int)
+    image "GenImageFontAtlas"))
+
+;;; Unload Font from GPU memory (VRAM)
+(define unload-font
+  (c-lambda (font)
+    void "UnloadFont"))
+
+;;; Shows current FPS
+(define draw-fps
+  (c-lambda (int int)
+    void "DrawFPS"))
+
+;;; Draw text (using default font)
+(define draw-text
+  (c-lambda (char-string int int int color)
+    void "DrawText"))
+
+;;; Draw text using font and additional parameters
+(define draw-text-ex
+  (c-lambda (font char-string vector2 float float color)
+    void "DrawTextEx"))
+
+;;; Draw text using font inside rectangle limits
+(define draw-text-rec
+  (c-lambda (font char-string rectangle float float bool color)
+    void "DrawTextRec"))
+
+;;; Draw text using font inside rectangle limits with support for text selection
+(define draw-text-rec-ex
+  (c-lambda (font char-string rectangle float float bool color int int color color)
+    void "DrawTextRecEx"))
+
+;;; Draw one character (codepoint)
+(define draw-text-codepoint
+  (c-lambda (font int vector2 float color)
+    void "DrawTextCodepoint"))
+
+;;; Measure string width for default font
+(define measure-text
+  (c-lambda (char-string int)
+    int "MeasureText"))
+
+;;; Measure string size for Font
+(define measure-text-ex
+  (c-lambda (font char-string float float)
+    vector2 "MeasureTextEx"))
+
+;;; Get index position for a unicode character on font
+(define get-glyph-index
+  (c-lambda (font int)
+    int "GetGlyphIndex"))
+
+;;; Copy one string to another, returns bytes copied
+(define text-copy
+  (c-lambda ((pointer char) char-string)
+    int "TextCopy"))
+
+;;; Check if two text string are equal
+(define text-is-equal
+  (c-lambda (char-string char-string)
+    bool "TextIsEqual"))
+
+;;; Get text length, checks for ' ' ending
+(define text-length
+  (c-lambda (char-string)
+    unsigned-int "TextLength"))
+
+;;; BUG: (Argument number) Text formatting with variables (sprintf style)
+; (define text-format
+;   (c-lambda (char-string)
+;     char-string "TextFormat"))
+
+;;; Get a piece of a text string
+(define text-subtext
+  (c-lambda (char-string int int)
+    char-string "TextSubtext"))
+
+;;; Replace text string (memory must be freed!)
+(define text-replace
+  (c-lambda ((pointer char) char-string char-string)
+    (pointer char) "TextReplace"))
+
+;;; Insert text in a position (memory must be freed!)
+(define text-insert
+  (c-lambda (char-string char-string int)
+    (pointer char) "TextInsert"))
+
+;;; Join text strings with delimiter
+(define text-join
+  (c-lambda ((pointer char-string) int char-string)
+    char-string "TextJoin"))
+
+;;; Split text into multiple strings
+(define text-split
+  (c-lambda (char-string char (pointer int))
+    (pointer char-string) "TextSplit"))
+
+;;; Append text at specific position and move cursor!
+(define text-append
+  (c-lambda ((pointer char) char-string (pointer int))
+    void "TextAppend"))
+
+;;; Find first text occurrence within a string
+(define text-find-index
+  (c-lambda (char-string char-string)
+    int "TextFindIndex"))
+
+;;; Get upper case version of provided string
+(define text-to-upper
+  (c-lambda (char-string)
+    char-string "TextToUpper"))
+
+;;; Get lower case version of provided string
+(define text-to-lower
+  (c-lambda (char-string)
+    char-string "TextToLower"))
+
+;;; Get Pascal case notation version of provided string
+(define text-to-pascal
+  (c-lambda (char-string)
+    char-string "TextToPascal"))
+
+;;; Get integer value from text (negative values not supported)
+(define text-to-integer
+  (c-lambda (char-string)
+    int "TextToInteger"))
+
+;;; Encode text codepoint into utf8 text (memory must be freed!)
+(define text-to-utf8
+  (c-lambda ((pointer int) int)
+    (pointer char) "TextToUtf8"))
+
+;;; Get all codepoints in a string, codepoints count returned by parameters
+(define get-codepoints
+  (c-lambda (char-string (pointer int))
+    (pointer int) "GetCodepoints"))
+
+;;; Get total number of characters (codepoints) in a UTF8 encoded string
+(define get-codepoints-count
+  (c-lambda (char-string)
+    int "GetCodepointsCount"))
+
+;;; Returns next codepoint in a UTF8 encoded string; 0x3f('?') is returned on failure
+(define get-next-codepoint
+  (c-lambda (char-string (pointer int))
+    int "GetNextCodepoint"))
+
+;;; Encode codepoint into utf8 text (char array length returned as parameter)
+(define codepoint-to-utf8
+  (c-lambda (int (pointer int))
+    char-string "CodepointToUtf8"))
