@@ -58,7 +58,7 @@ c-declare-end
 (c-define-type audio-stream       "AudioStream")
 (c-define-type sound              "Sound")
 (c-define-type music              "Music")
-(c-define-type vr-device-info     "vrDeviceInfo")
+(c-define-type vr-device-info     "VrDeviceInfo")
 
 
 ;  ▄████████  ▄██████▄     ▄████████    ▄████████ 
@@ -1603,3 +1603,153 @@ c-declare-end
 (define codepoint-to-utf8
   (c-lambda (int (pointer int))
     char-string "CodepointToUtf8"))
+
+
+;    ▄████████    ▄█    █▄       ▄████████ ████████▄     ▄████████    ▄████████    ▄████████ 
+;   ███    ███   ███    ███     ███    ███ ███   ▀███   ███    ███   ███    ███   ███    ███ 
+;   ███    █▀    ███    ███     ███    ███ ███    ███   ███    █▀    ███    ███   ███    █▀  
+;   ███         ▄███▄▄▄▄███▄▄   ███    ███ ███    ███  ▄███▄▄▄      ▄███▄▄▄▄██▀   ███        
+; ▀███████████ ▀▀███▀▀▀▀███▀  ▀███████████ ███    ███ ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   ▀███████████ 
+;          ███   ███    ███     ███    ███ ███    ███   ███    █▄  ▀███████████          ███ 
+;    ▄█    ███   ███    ███     ███    ███ ███   ▄███   ███    ███   ███    ███    ▄█    ███ 
+;  ▄████████▀    ███    █▀      ███    █▀  ████████▀    ██████████   ███    ███  ▄████████▀  
+;                                                                    ███    ███              
+
+;;;-----------------------------------------------------------------------------
+;;; These are the functions defined in the text module of raylib.
+;;;-----------------------------------------------------------------------------
+;;; Load chars array from text file
+(define load-text
+  (c-lambda (char-string)
+    (pointer char) "LoadText"))
+
+;;; Load shader from files and bind default locations
+(define load-shader
+  (c-lambda (char-string char-string)
+    shader "LoadShader"))
+
+;;; Load shader from code strings and bind default locations
+(define load-shader-code
+  (c-lambda ((pointer char) (pointer char))
+    shader "LoadShaderCode"))
+
+;;; Unload shader from GPU memory (VRAM)
+(define unload-shader
+  (c-lambda (shader)
+    void "UnloadShader"))
+
+;;; Get default shader
+(define get-shader-default
+  (c-lambda ()
+    shader "GetShaderDefault"))
+
+;;; Get default texture
+(define get-texture-default
+  (c-lambda ()
+    texture-2d "GetTextureDefault"))
+
+;;; Get texture to draw shapes
+(define get-shapes-texture
+  (c-lambda ()
+    texture-2d "GetShapesTexture"))
+
+;;; Get texture rectangle to draw shapes
+(define get-shapes-texture-rec
+  (c-lambda ()
+    rectangle "GetShapesTextureRec"))
+
+;;; Define default texture used to draw shapes
+(define set-shapes-texture
+  (c-lambda (texture-2d rectangle)
+    void "SetShapesTexture"))
+
+;;; Get shader uniform location
+(define get-shader-location
+  (c-lambda (shader char-string)
+    int "GetShaderLocation"))
+
+;;; Set shader uniform value
+(define set-shader-value
+  (c-lambda (shader int (nonnull-pointer void) int)
+    void "SetShaderValue"))
+
+;;; Set shader uniform value vector
+(define set-shader-value-v
+  (c-lambda (shader int (nonnull-pointer void) int int)
+    void "SetShaderValueV"))
+
+;;; Set shader uniform value (matrix 4x4)
+(define set-shader-value-matrix
+  (c-lambda (shader int matrix)
+    void "SetShaderValueMatrix"))
+
+;;; Set shader uniform value for texture
+(define set-shader-value-texture
+  (c-lambda (shader int texture-2d)
+    void "SetShaderValueTexture"))
+
+;;; Set a custom projection matrix (replaces internal projection matrix)
+(define set-matrix-projection
+  (c-lambda (matrix)
+    void "SetMatrixProjection"))
+
+;;; Set a custom modelview matrix (replaces internal modelview matrix)
+(define set-matrix-modelview
+  (c-lambda (matrix)
+    void "SetMatrixModelview"))
+
+;;; Get internal modelview matrix
+(define get-matrix-modelview
+  (c-lambda ()
+    matrix "GetMatrixModelview"))
+
+;;; Get internal projection matrix
+(define get-matrix-projection
+  (c-lambda ()
+    matrix "GetMatrixProjection"))
+
+;;; Begin custom shader drawing
+(define begin-shader-mode
+  (c-lambda (shader)
+    void "BeginShaderMode"))
+
+;;; End custom shader drawing (use default shader)
+(define end-shader-mode
+  (c-lambda ()
+    void "EndShaderMode"))
+
+;;; Begin blending mode (alpha, additive, multiplied)
+(define begin-blend-mode
+  (c-lambda (int)
+    void "BeginBlendMode"))
+
+;;; End blending mode (reset to default: alpha blending)
+(define end-blend-mode
+  (c-lambda ()
+    void "EndBlendMode"))
+
+;;; Init VR simulator for selected device parameters
+(define init-vr-simulator
+  (c-lambda ()
+    void "InitVrSimulator"))
+
+;;; Close VR simulator for current device
+(define close-vr-simulator
+  (c-lambda ()
+    void "CloseVrSimulator"))
+
+;;; Update VR tracking (position and orientation) and camera
+(define update-vr-tracking
+  (c-lambda ((pointer camera))
+    void "UpdateVrTracking"))
+
+;;; Set stereo rendering configuration parameters 
+(define set-vr-configuration
+  (c-lambda (vr-device-info shader)
+    void "SetVrConfiguration"))
+
+;;; Detect if VR simulator is ready
+(define is-vr-simulator-ready
+  (c-lambda ()
+    bool "IsVrSimulatorReady"))
+
