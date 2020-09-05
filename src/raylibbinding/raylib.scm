@@ -22,42 +22,48 @@ c-declare-end
 ;                            ███    ███                                   
 
 ;;; Structure definitions
-(c-define-type color              "Color")
 (c-define-type vector2            "Vector2")
 (c-define-type vector3            "Vector3")
 (c-define-type vector4            "Vector4")
 (c-define-type quaternion         "Quaternion")
 (c-define-type matrix             "Matrix")
+(c-define-type color              "Color")
 (c-define-type rectangle          "Rectangle")
+
 (c-define-type image              "Image")
-(c-define-type texture-2d         "Texture2D")
+
 (c-define-type texture            "Texture")
+(c-define-type texture-2d         "Texture2D")
 (c-define-type texture-cubemap    "TextureCubemap")
 (c-define-type render-texture-2d  "RenderTexture2D")
+
 (c-define-type render-texture     "RenderTexture")
 (c-define-type n-patch-info       "NPatchInfo")
 (c-define-type char-info          "CharInfo")
 (c-define-type font               "Font")
 (c-define-type sprite-font        "SpriteFont") 
-(c-define-type camera-3d          "Camera3D")
+
 (c-define-type camera             "Camera")
 (c-define-type camera-2d          "Camera2D")
+(c-define-type camera-3d          "Camera3D")
 (c-define-type mesh               "Mesh")
 (c-define-type shader             "Shader")
 (c-define-type material-map       "MaterialMap")
 (c-define-type material           "Material")
+(c-define-type model              "Model")
 (c-define-type transform          "Transform")
 (c-define-type bone-info          "BoneInfo")
-(c-define-type model              "Model")
 (c-define-type model-animation    "ModelAnimation")
 (c-define-type ray                "Ray")
 (c-define-type ray-hit-info       "RayHitInfo")
 (c-define-type bounding-box       "BoundingBox")
+
 (c-define-type wave               "Wave")
-(c-define-type r-audio-buffer     "rAudioBuffer")
-(c-define-type audio-stream       "AudioStream")
 (c-define-type sound              "Sound")
 (c-define-type music              "Music")
+(c-define-type audio-stream       "AudioStream")
+(c-define-type r-audio-buffer     "rAudioBuffer")
+
 (c-define-type vr-device-info     "VrDeviceInfo")
 
 
@@ -381,7 +387,7 @@ c-declare-end
 
 ;;; Returns a Color struct from hexadecimal value
 (define get-color
-  (c-lambda (int)
+  (c-lambda (unsigned-int32)
     color "GetColor"))
 
 ;;; Color fade-in or fade-out, alpha goes from 0.0f to 1.0f
