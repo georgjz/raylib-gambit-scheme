@@ -1753,3 +1753,272 @@ c-declare-end
   (c-lambda ()
     bool "IsVrSimulatorReady"))
 
+
+   ▄████████ ███    █▄  ████████▄   ▄█   ▄██████▄  
+  ███    ███ ███    ███ ███   ▀███ ███  ███    ███ 
+  ███    ███ ███    ███ ███    ███ ███▌ ███    ███ 
+  ███    ███ ███    ███ ███    ███ ███▌ ███    ███ 
+▀███████████ ███    ███ ███    ███ ███▌ ███    ███ 
+  ███    ███ ███    ███ ███    ███ ███  ███    ███ 
+  ███    ███ ███    ███ ███   ▄███ ███  ███    ███ 
+  ███    █▀  ████████▀  ████████▀  █▀    ▀██████▀  
+                                                   
+;;;-----------------------------------------------------------------------------
+;;; These are the functions defined in the audio module of raylib.
+;;;-----------------------------------------------------------------------------
+;;; Initialize audio device and context
+(define init-audio-device
+  (c-lambda ()
+    void "InitAudioDevice"))
+
+;;; Close the audio device and context (and music stream)
+(define close-audio-device
+  (c-lambda ()
+    void "CloseAudioDevice"))
+
+;;; Check if audio device is ready
+(define is-audio-device-ready
+  (c-lambda ()
+    bool "IsAudioDeviceReady"))
+
+;;; Set master volume (listener)
+(define set-master-volume
+  (c-lambda (float)
+    void "SetMasterVolume"))
+
+;;; Load wave data from file
+(define load-wave
+  (c-lambda (char-string)
+    wave "LoadWave"))
+
+;;; BUG: Converting Wave to void* not working properly
+;;; Load wave data from raw array data
+; (define load-wave-ex
+;   (c-lambda ((pointer void) int int int int)
+;     wave "LoadWaveEx"))
+
+;;; Load sound from file
+(define load-sound
+  (c-lambda (char-string)
+    sound "LoadSound"))
+
+;;; Load sound from wave data
+(define load-sound-from-wave
+  (c-lambda (wave)
+    sound "LoadSoundFromWave"))
+
+;;; Update sound buffer with new data
+(define update-sound
+  (c-lambda (sound (nonnull-pointer void) int)
+    void "UpdateSound"))
+
+;;; Unload wave data
+(define unload-wave
+  (c-lambda (wave)
+    void "UnloadWave"))
+
+;;; Unload sound
+(define unload-sound
+  (c-lambda (sound)
+    void "UnloadSound"))
+
+;;; Export wave data to file
+(define export-wave
+  (c-lambda (wave char-string)
+    void "ExportWave"))
+
+;;; Export wave sample data to code (.h)
+(define export-wave-as-code
+  (c-lambda (wave char-string)
+    void "ExportWaveAsCode"))
+
+;;; Play a sound
+(define play-sound
+  (c-lambda (sound)
+    void "PlaySound"))
+
+;;; Stop playing a sound
+(define stop-sound
+  (c-lambda (sound)
+    void "StopSound"))
+
+;;; Pause a sound
+(define pause-sound
+  (c-lambda (sound)
+    void "PauseSound"))
+
+;;; Resume a paused sound
+(define resume-sound
+  (c-lambda (sound)
+    void "ResumeSound"))
+
+;;; Play a sound (using multichannel buffer pool)
+(define play-sound-multi
+  (c-lambda (sound)
+    void "PlaySoundMulti"))
+
+;;; Stop any sound playing (using multichannel buffer pool)
+(define stop-sound-multi
+  (c-lambda ()
+    void "StopSoundMulti"))
+
+;;; Get number of sounds playing in the multichannel
+(define get-sounds-playing
+  (c-lambda ()
+    int "GetSoundsPlaying"))
+
+;;; Check if a sound is currently playing
+(define is-sound-playing
+  (c-lambda (sound)
+    bool "IsSoundPlaying"))
+
+;;; Set volume for a sound (1.0 is max level)
+(define set-sound-volume
+  (c-lambda (sound float)
+    void "SetSoundVolume"))
+
+;;; Set pitch for a sound (1.0 is base level)
+(define set-sound-pitch
+  (c-lambda (sound float)
+    void "SetSoundPitch"))
+
+;;; Convert wave data to desired format
+(define wave-format
+  (c-lambda ((pointer wave) int int int)
+    void "WaveFormat"))
+
+;;; Copy a wave to a new wave
+(define wave-copy
+  (c-lambda (wave)
+    wave "WaveCopy"))
+
+;;; Crop a wave to defined samples range
+(define wave-crop
+  (c-lambda ((pointer wave) int int)
+    void "WaveCrop"))
+
+;;; Get samples data from wave as a floats array
+(define get-wave-data
+  (c-lambda (wave)
+    (pointer float) "GetWaveData"))
+
+;;; Load music stream from file
+(define load-music-stream
+  (c-lambda (char-string)
+    music "LoadMusicStream"))
+
+;;; Unload music stream
+(define unload-music-stream
+  (c-lambda (music)
+    void "UnloadMusicStream"))
+
+;;; Start music playing
+(define play-music-stream
+  (c-lambda (music)
+    void "PlayMusicStream"))
+
+;;; Updates buffers for music streaming
+(define update-music-stream
+  (c-lambda (music)
+    void "UpdateMusicStream"))
+
+;;; Stop music playing
+(define stop-music-stream
+  (c-lambda (music)
+    void "StopMusicStream"))
+
+;;; Pause music playing
+(define pause-music-stream
+  (c-lambda (music)
+    void "PauseMusicStream"))
+
+;;; Resume playing paused music
+(define resume-music-stream
+  (c-lambda (music)
+    void "ResumeMusicStream"))
+
+;;; Check if music is playing
+(define is-music-playing
+  (c-lambda (music)
+    bool "IsMusicPlaying"))
+
+;;; Set volume for music (1.0 is max level)
+(define set-music-volume
+  (c-lambda (music float)
+    void "SetMusicVolume"))
+
+;;; Set pitch for a music (1.0 is base level)
+(define set-music-pitch
+  (c-lambda (music float)
+    void "SetMusicPitch"))
+
+;;; BUG: can't find reference
+;;; Set music loop count (loop repeats)
+; (define set-music-loop-count
+;   (c-lambda (music int)
+;     void "SetMusicLoopCount"))
+
+;;; Get music time length (in seconds)
+(define get-music-time-length
+  (c-lambda (music)
+    float "GetMusicTimeLength"))
+
+;;; Get current music time played (in seconds)
+(define get-music-time-played
+  (c-lambda (music)
+    float "GetMusicTimePlayed"))
+
+;;; Init audio stream (to stream raw audio pcm data)
+(define init-audio-stream
+  (c-lambda (unsigned-int unsigned-int unsigned-int)
+    audio-stream "InitAudioStream"))
+
+;;; Update audio stream buffers with data
+(define update-audio-stream
+  (c-lambda (audio-stream (nonnull-pointer void) int)
+    void "UpdateAudioStream"))
+
+;;; Close audio stream and free memory
+(define close-audio-stream
+  (c-lambda (audio-stream)
+    void "CloseAudioStream"))
+
+;;; Check if any audio stream buffers requires refill
+(define is-audio-stream-processed
+  (c-lambda (audio-stream)
+    bool "IsAudioStreamProcessed"))
+
+;;; Play audio stream
+(define play-audio-stream
+  (c-lambda (audio-stream)
+    void "PlayAudioStream"))
+
+;;; Pause audio stream
+(define pause-audio-stream
+  (c-lambda (audio-stream)
+    void "PauseAudioStream"))
+
+;;; Resume audio stream
+(define resume-audio-stream
+  (c-lambda (audio-stream)
+    void "ResumeAudioStream"))
+
+;;; Check if audio stream is playing
+(define is-audio-stream-playing
+  (c-lambda (audio-stream)
+    bool "IsAudioStreamPlaying"))
+
+;;; Stop audio stream
+(define stop-audio-stream
+  (c-lambda (audio-stream)
+    void "StopAudioStream"))
+
+;;; Set volume for audio stream (1.0 is max level)
+(define set-audio-stream-volume
+  (c-lambda (audio-stream float)
+    void "SetAudioStreamVolume"))
+
+;;; Set pitch for audio stream (1.0 is base level)
+(define set-audio-stream-pitch
+  (c-lambda (audio-stream float)
+    void "SetAudioStreamPitch"))
