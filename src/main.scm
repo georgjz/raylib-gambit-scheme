@@ -4,8 +4,8 @@
 ;;; Some game constants 
 (define screen-width 800)
 (define screen-height 450)
-(define RAYWHITE (get-color 16448250))
-(define RAYGRAY (get-color 1644825))
+(define RAYWHITE (make-color 200 200 200 255))
+(define DARKGRAY (make-color 80 80 80 255))
 
 ;;; Initialize the game
 (define init-game 
@@ -24,7 +24,7 @@
                           20
                           20 
                           30 
-                          (get-color 16777215))
+                          DARKGRAY)
                (end-drawing)
                (main-loop)))))
 

@@ -381,7 +381,7 @@ c-declare-end
 
 ;;; Returns a Color struct from hexadecimal value
 (define get-color
-  (c-lambda (int)
+  (c-lambda (unsigned-int32)
     color "GetColor"))
 
 ;;; Color fade-in or fade-out, alpha goes from 0.0f to 1.0f
