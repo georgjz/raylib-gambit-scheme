@@ -32,7 +32,7 @@ c-declare-end
 (c-define-type image              "Image")
 (c-define-type texture-2d         "Texture2D")
 (c-define-type texture            "Texture")
-(c-define-type tex-cube-map       "TexCubeMap")
+(c-define-type texture-cubemap    "TextureCubemap")
 (c-define-type render-texture-2d  "RenderTexture2D")
 (c-define-type render-texture     "RenderTexture")
 (c-define-type n-patch-info       "NPatchInfo")
@@ -990,3 +990,422 @@ c-declare-end
 (define check-collision-point-triangle
   (c-lambda (vector2 vector2 vector2 vector2)
     bool "CheckCollisionPointTriangle"))
+
+
+;     ███        ▄████████ ▀████    ▐████▀     ███     ███    █▄     ▄████████    ▄████████ 
+; ▀█████████▄   ███    ███   ███▌   ████▀  ▀█████████▄ ███    ███   ███    ███   ███    ███ 
+;    ▀███▀▀██   ███    █▀     ███  ▐███       ▀███▀▀██ ███    ███   ███    ███   ███    █▀  
+;     ███   ▀  ▄███▄▄▄        ▀███▄███▀        ███   ▀ ███    ███  ▄███▄▄▄▄██▀  ▄███▄▄▄     
+;     ███     ▀▀███▀▀▀        ████▀██▄         ███     ███    ███ ▀▀███▀▀▀▀▀   ▀▀███▀▀▀     
+;     ███       ███    █▄    ▐███  ▀███        ███     ███    ███ ▀███████████   ███    █▄  
+;     ███       ███    ███  ▄███     ███▄      ███     ███    ███   ███    ███   ███    ███ 
+;    ▄████▀     ██████████ ████       ███▄    ▄████▀   ████████▀    ███    ███   ██████████ 
+;                                                                   ███    ███              
+
+;;;-----------------------------------------------------------------------------
+;;; These are the functions defined in the texture module of raylib.
+;;;-----------------------------------------------------------------------------
+;;; Load image from file into CPU memory (RAM)
+; (define load-image
+;   (c-lambda (char-string)
+;     image "LoadImage"))
+
+; ;;; Load image from Color array data (RGBA - 32bit)
+; (define load-image-ex
+;   (c-lambda ((pointer color) int int)
+;     image "LoadImageEx"))
+
+; ;;; Load image from raw data with parameters
+; (define load-image-pro
+;   (c-lambda ((pointer void) int int int)
+;     image "LoadImagePro"))
+
+; ;;; Load image from RAW file data
+; (define load-image-raw
+;   (c-lambda (char-string int int int int)
+;     image "LoadImageRaw"))
+
+; ;;; Unload image from CPU memory (RAM)
+; (define unload-image
+;   (c-lambda (image)
+;     void "UnloadImage"))
+
+; ;;; Export image data to file
+; (define export-image
+;   (c-lambda (image char-string)
+;     void "ExportImage"))
+
+; ;;; Export image as code file defining an array of bytes
+; (define export-image-as-code
+;   (c-lambda (image char-string)
+;     void "ExportImageAsCode"))
+
+; ;;; Get pixel data from image as a Color struct array
+; (define get-image-data
+;   (c-lambda (image)
+;     (pointer color) "GetImageData"))
+
+; ;;; Get pixel data from image as Vector4 array (float normalized)
+; (define get-image-data-normalized
+;   (c-lambda (image)
+;     (pointer vector4) "GetImageDataNormalized"))
+
+; ;;; Generate image: plain color
+; (define gen-image-color
+;   (c-lambda (int int color)
+;     image "GenImageColor"))
+
+; ;;; Generate image: vertical gradient
+; (define gen-image-gradient-v
+;   (c-lambda (int int color color)
+;     image "GenImageGradientV"))
+
+; ;;; Generate image: horizontal gradient
+; (define gen-image-gradient-h
+;   (c-lambda (int int color color)
+;     image "GenImageGradientH"))
+
+; ;;; Generate image: radial gradient
+; (define gen-image-gradient-radial
+;   (c-lambda (int int float color color)
+;     image "GenImageGradientRadial"))
+
+; ;;; Generate image: checked
+; (define gen-image-checked
+;   (c-lambda (int int int int color color)
+;     image "GenImageChecked"))
+
+; ;;; Generate image: white noise
+; (define gen-image-white-noise
+;   (c-lambda (int int float)
+;     image "GenImageWhiteNoise"))
+
+; ;;; Generate image: perlin noise
+; (define gen-image-perlin-noise
+;   (c-lambda (int int int int float)
+;     image "GenImagePerlinNoise"))
+
+; ;;; Generate image: cellular algorithm. Bigger tileSize means bigger cells
+; (define gen-image-cellular
+;   (c-lambda (int int int)
+;     image "GenImageCellular"))
+
+; ;;; Create an image duplicate (useful for transformations)
+; (define image-copy
+;   (c-lambda (image)
+;     image "ImageCopy"))
+
+; ;;; Create an image from another image piece
+; (define image-from-image
+;   (c-lambda (image rectangle)
+;     image "ImageFromImage"))
+
+; ;;; Create an image from text (default font)
+; (define image-text
+;   (c-lambda (char-string int color)
+;     image "ImageText"))
+
+; ;;; Create an image from text (custom sprite font)
+; (define image-text-ex
+;   (c-lambda (font char-string float float color)
+;     image "ImageTextEx"))
+
+; ;;; Convert image to POT (power-of-two)
+; (define image-to-pot
+;   (c-lambda ((pointer image) color)
+;     void "ImageToPOT"))
+
+; ;;; Convert image data to desired format
+; (define image-format
+;   (c-lambda ((pointer image) int)
+;     void "ImageFormat"))
+
+; ;;; Apply alpha mask to image
+; (define image-alpha-mask
+;   (c-lambda ((pointer image) image)
+;     void "ImageAlphaMask"))
+
+; ;;; Clear alpha channel to desired color
+; (define image-alpha-clear
+;   (c-lambda ((pointer image) color float)
+;     void "ImageAlphaClear"))
+
+; ;;; Crop image depending on alpha value
+; (define image-alpha-crop
+;   (c-lambda ((pointer image) float)
+;     void "ImageAlphaCrop"))
+
+; ;;; Premultiply alpha channel
+; (define image-alpha-premultiply
+;   (c-lambda ((pointer image))
+;     void "ImageAlphaPremultiply"))
+
+; ;;; Crop an image to a defined rectangle
+; (define image-crop
+;   (c-lambda ((pointer image) rectangle)
+;     void "ImageCrop"))
+
+; ;;; Resize image (Bicubic scaling algorithm)
+; (define image-resize
+;   (c-lambda ((pointer image) int int)
+;     void "ImageResize"))
+
+; ;;; Resize image (Nearest-Neighbor scaling algorithm)
+; (define image-resize-nn
+;   (c-lambda ((pointer image) int int)
+;     void "ImageResizeNN"))
+
+; ;;; Resize canvas and fill with color
+; (define image-resize-canvas
+;   (c-lambda ((pointer image) int int int int color)
+;     void "ImageResizeCanvas"))
+
+; ;;; Generate all mipmap levels for a provided image
+; (define image-mipmaps
+;   (c-lambda ((pointer image))
+;     void "ImageMipmaps"))
+
+; ;;; Dither image data to 16bpp or lower (Floyd-Steinberg dithering)
+; (define image-dither
+;   (c-lambda ((pointer image) int int int int)
+;     void "ImageDither"))
+
+; ;;; Flip image vertically
+; (define image-flip-vertical
+;   (c-lambda ((pointer image))
+;     void "ImageFlipVertical"))
+
+; ;;; Flip image horizontally
+; (define image-flip-horizontal
+;   (c-lambda ((pointer image))
+;     void "ImageFlipHorizontal"))
+
+; ;;; Rotate image clockwise 90deg
+; (define image-rotate-cw
+;   (c-lambda ((pointer image))
+;     void "ImageRotateCW"))
+
+; ;;; Rotate image counter-clockwise 90deg
+; (define image-rotate-ccw
+;   (c-lambda ((pointer image))
+;     void "ImageRotateCCW"))
+
+; ;;; Modify image color: tint
+; (define image-color-tint
+;   (c-lambda ((pointer image) color)
+;     void "ImageColorTint"))
+
+; ;;; Modify image color: invert
+; (define image-color-invert
+;   (c-lambda ((pointer image))
+;     void "ImageColorInvert"))
+
+; ;;; Modify image color: grayscale
+; (define image-color-grayscale
+;   (c-lambda ((pointer image))
+;     void "ImageColorGrayscale"))
+
+; ;;; Modify image color: contrast (-100 to 100)
+; (define image-color-contrast
+;   (c-lambda ((pointer image) float)
+;     void "ImageColorContrast"))
+
+; ;;; Modify image color: brightness (-255 to 255)
+; (define image-color-brightness
+;   (c-lambda ((pointer image) int)
+;     void "ImageColorBrightness"))
+
+; ;;; Modify image color: replace color
+; (define image-color-replace
+;   (c-lambda ((pointer image) color color)
+;     void "ImageColorReplace"))
+
+; ;;; Extract color palette from image to maximum size (memory should be freed)
+; (define image-extract-palette
+;   (c-lambda (image int (pointer int))
+;     (pointer color) "ImageExtractPalette"))
+
+; ;;; Get image alpha border rectangle
+; (define get-image-alpha-border
+;   (c-lambda (image float)
+;     rectangle "GetImageAlphaBorder"))
+
+; ;;; Clear image background with given color
+; (define image-clear-background
+;   (c-lambda ((pointer image) color)
+;     void "ImageClearBackground"))
+
+; ;;; Draw pixel within an image
+; (define image-draw-pixel
+;   (c-lambda ((pointer image) int int color)
+;     void "ImageDrawPixel"))
+
+; ;;; Draw pixel within an image (Vector version)
+; (define image-draw-pixel-v
+;   (c-lambda ((pointer image) vector2 color)
+;     void "ImageDrawPixelV"))
+
+; ;;; Draw line within an image
+; (define image-draw-line
+;   (c-lambda ((pointer image) int int int int color)
+;     void "ImageDrawLine"))
+
+; ;;; Draw line within an image (Vector version)
+; (define image-draw-line-v
+;   (c-lambda ((pointer image) vector2 vector2 color)
+;     void "ImageDrawLineV"))
+
+; ;;; Draw circle within an image
+; (define image-draw-circle
+;   (c-lambda ((pointer image) int int int color)
+;     void "ImageDrawCircle"))
+
+; ;;; Draw circle within an image (Vector version)
+; (define image-draw-circle-v
+;   (c-lambda ((pointer image) vector2 int color)
+;     void "ImageDrawCircleV"))
+
+; ;;; Draw rectangle within an image
+; (define image-draw-rectangle
+;   (c-lambda ((pointer image) int int int int color)
+;     void "ImageDrawRectangle"))
+
+; ;;; Draw rectangle within an image (Vector version)
+; (define image-draw-rectangle-v
+;   (c-lambda ((pointer image) vector2 vector2 color)
+;     void "ImageDrawRectangleV"))
+
+; ;;; Draw rectangle within an image 
+; (define image-draw-rectangle-rec
+;   (c-lambda ((pointer image) rectangle color)
+;     void "ImageDrawRectangleRec"))
+
+; ;;; Draw rectangle lines within an image
+; (define image-draw-rectangle-lines
+;   (c-lambda ((pointer image) rectangle int color)
+;     void "ImageDrawRectangleLines"))
+
+; ;;; Draw a source image within a destination image (tint applied to source)
+; (define image-draw
+;   (c-lambda ((pointer image) image rectangle rectangle color)
+;     void "ImageDraw"))
+
+; ;;; Draw text (default font) within an image (destination)
+; (define image-draw-text
+;   (c-lambda ((pointer image) vector2 char-string int color)
+;     void "ImageDrawText"))
+
+; ;;; Draw text (custom sprite font) within an image (destination)
+; (define image-draw-text-ex
+;   (c-lambda ((pointer image) vector2 font char-string float float color)
+;     void "ImageDrawTextEx"))
+
+; ;;; Load texture from file into GPU memory (VRAM)
+; (define load-texture
+;   (c-lambda (char-string)
+;     texture-2d "LoadTexture"))
+
+; ;;; Load texture from image data
+; (define load-texture-from-image
+;   (c-lambda (image)
+;     texture-2d "LoadTextureFromImage"))
+
+; ;;; Load cubemap from image, multiple image cubemap layouts supported
+; (define load-texture-cubemap
+;   (c-lambda (image int)
+;     texture-cubemap "LoadTextureCubemap"))
+
+; ;;; Load texture for rendering (framebuffer)
+; (define load-render-texture
+;   (c-lambda (int int)
+;     render-texture-2d "LoadRenderTexture"))
+
+; ;;; Unload texture from GPU memory (VRAM)
+; (define unload-texture
+;   (c-lambda (texture-2d)
+;     void "UnloadTexture"))
+
+; ;;; Unload render texture from GPU memory (VRAM)
+; (define unload-render-texture
+;   (c-lambda (render-texture-2d)
+;     void "UnloadRenderTexture"))
+
+; ;;; BUG: (const void pointer)Update GPU texture with new data
+; (define update-texture
+;   (c-lambda (texture-2d (nonnull-pointer void))
+;     void "UpdateTexture"))
+
+; ;;; Unload render texture from GPU memory (VRAM)
+; (define unload-render-texture
+;   (c-lambda (render-texture-2d)
+;     void "UnloadRenderTexture"))
+
+; ;;; Update GPU texture with new data
+; (define update-texture
+;   (c-lambda (texture-2d (nonnull-pointer void))
+;     void "UpdateTexture"))
+
+; ;;; Get pixel data from GPU texture and return an Image
+; (define get-texture-data
+;   (c-lambda (texture-2d)
+;     image "GetTextureData"))
+
+; ;;; Get pixel data from screen buffer and return an Image (screenshot)
+; (define get-screen-data
+;   (c-lambda ()
+;     image "GetScreenData"))
+
+; ;;; Generate GPU mipmaps for a texture
+; (define gen-texture-mipmaps
+;   (c-lambda ((pointer texture-2d))
+;     void "GenTextureMipmaps"))
+
+; ;;; Set texture scaling filter mode
+; (define set-texture-filter
+;   (c-lambda (texture-2d int)
+;     void "SetTextureFilter"))
+
+; ;;; Set texture wrapping mode
+; (define set-texture-wrap
+;   (c-lambda (texture-2d int)
+;     void "SetTextureWrap"))
+
+; ;;; Draw a Texture2D
+; (define draw-texture
+;   (c-lambda (texture-2d int int color)
+;     void "DrawTexture"))
+
+; ;;; Draw a Texture2D with position defined as Vector2
+; (define draw-texture-v
+;   (c-lambda (texture-2d vector2 color)
+;     void "DrawTextureV"))
+
+; ;;; Draw a Texture2D with extended parameters
+; (define draw-texture-ex
+;   (c-lambda (texture-2d vector2 float float color)
+;     void "DrawTextureEx"))
+
+; ;;; Draw a part of a texture defined by a rectangle
+; (define draw-texture-rec
+;   (c-lambda (texture-2d rectangle vector2 color)
+;     void "DrawTextureRec"))
+
+; ;;; Draw texture quad with tiling and offset parameters
+; (define draw-texture-quad
+;   (c-lambda (texture-2d vector2 vector2 rectangle color)
+;     void "DrawTextureQuad"))
+
+; ;;; Draw a part of a texture defined by a rectangle with 'pro' parameters
+; (define draw-texture-pro
+;   (c-lambda (texture-2d rectangle rectangle vector2 float color)
+;     void "DrawTexturePro"))
+
+; ;;; Draws a texture (or part of it) that stretches or shrinks nicely
+; (define draw-texture-n-patch
+;   (c-lambda (texture-2d n-patch-info rectangle vector2 float color)
+;     void "DrawTextureNPatch"))
+
+; ;;; Get pixel data size in bytes (image or texture)
+; (define get-pixel-data-size
+;   (c-lambda (int int int)
+;     int "GetPixelDataSize"))
