@@ -4,15 +4,13 @@
 ;;; Some game constants 
 (define screen-width 800)
 (define screen-height 450)
-(define RAYWHITE (make-color 200 200 200 255))
-(define DARKGRAY (make-color 80 80 80 255))
 
 ;;; Initialize the game
 (define init-game 
   (lambda ()
     (init-window screen-width 
                  screen-height
-                 "Raylib with Scheme")
+                 "Raylib with Gambit Scheme")
     (set-target-fps 60)))
 
 (define main-loop 
@@ -20,7 +18,7 @@
     (if (not (window-should-close))
         (begin (begin-drawing)
                (clear-background RAYWHITE)
-               (draw-text "ABSOLUTE POWER"
+               (draw-text "(absolute 'power)"
                           20
                           20 
                           30 
