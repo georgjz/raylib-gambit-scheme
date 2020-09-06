@@ -25,8 +25,8 @@ c-declare-end
 ;;; Structure definitions
 (c-define-type vector2            "Vector2")
 ;-------------------------------------------------------------------------------
-; (define make-vector2 
-  ; (c-lambda (float float) vector2 "Vector2 vec = (Vector2){ ___arg1, ___arg2 }; ___return(vec);"))
+(define make-vector2 
+  (c-lambda (float float) vector2 "Vector2 vec = (Vector2){ ___arg1, ___arg2 }; ___return(vec);"))
 ;-------------------------------------------------------------------------------
 ; (c-define-type vector2            "Vector2" "VECTOR2_to_SCMOBJ" "SCMOBJ_to_VECTOR2" #f)
 ; (include "structs/struct-helpers.scm")
