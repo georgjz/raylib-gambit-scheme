@@ -11,6 +11,7 @@
 c-declare-end
 )
 
+
 ;    ▄████████     ███        ▄████████ ███    █▄   ▄████████     ███     
 ;   ███    ███ ▀█████████▄   ███    ███ ███    ███ ███    ███ ▀█████████▄ 
 ;   ███    █▀     ▀███▀▀██   ███    ███ ███    ███ ███    █▀     ▀███▀▀██ 
@@ -65,6 +66,23 @@ c-declare-end
 (c-define-type r-audio-buffer     "rAudioBuffer")
 
 (c-define-type vr-device-info     "VrDeviceInfo")
+
+;-------------------------------------------------------------------------------
+(define make-vector2 
+  (c-lambda (float float) 
+    vector2 "Vector2 vec = (Vector2){ ___arg1, ___arg2 }; 
+             ___return( vec );"))
+
+(define make-vector3
+  (c-lambda (float float float) 
+    vector3 "Vector3 vec = (Vector3){ ___arg1, ___arg2, ___arg3 }; 
+             ___return( vec );"))
+
+(define make-camera-3d 
+  (c-lambda (vector3 vector3 vector3 float int)
+    camera-3d "Camera3D cam = (Camera3D){ ___arg1, ___arg2, ___arg3, ___arg4, ___arg5 };
+               ___return( cam );"))
+;-------------------------------------------------------------------------------
 
 
 ;  ▄████████  ▄██████▄     ▄████████    ▄████████ 
@@ -266,22 +284,22 @@ c-declare-end
     void "EndDrawing"))
 
 ;;; Initialize 2D mode with custom camera (2D)
-(define begin-mode2-d
+(define begin-mode-2d
   (c-lambda (camera-2d)
     void "BeginMode2D"))
 
 ;;; Ends 2D mode with custom camera
-(define end-mode2-d
+(define end-mode-2d
   (c-lambda ()
     void "EndMode2D"))
 
 ;;; Initializes 3D mode with custom camera (3D)
-(define begin-mode3-d
+(define begin-mode-3d
   (c-lambda (camera-3d)
     void "BeginMode3D"))
 
 ;;; Ends 3D mode and returns to default 2D orthographic mode
-(define end-mode3-d
+(define end-mode-3d
   (c-lambda ()
     void "EndMode3D"))
 
@@ -316,7 +334,7 @@ c-declare-end
     matrix "GetCameraMatrix"))
 
 ;;; Returns camera 2d transform matrix
-(define get-camera-matrix2-d
+(define get-camera-matrix-2d
   (c-lambda (camera-2d)
     matrix "GetCameraMatrix2D"))
 
@@ -331,12 +349,12 @@ c-declare-end
     vector2 "GetWorldToScreenEx"))
 
 ;;; Returns the screen space position for a 2d camera world space position
-(define get-world-to-screen2-d
+(define get-world-to-screen-2d
   (c-lambda (vector2 camera-2d)
     vector2 "GetWorldToScreen2D"))
 
 ;;; Returns the world space position for a 2d camera screen space position
-(define get-screen-to-world2-d
+(define get-screen-to-world-2d
   (c-lambda (vector2 camera-2d)
     vector2 "GetScreenToWorld2D"))
 
@@ -1611,6 +1629,325 @@ c-declare-end
     char-string "CodepointToUtf8"))
 
 
+;    ▄▄▄▄███▄▄▄▄    ▄██████▄  ████████▄     ▄████████  ▄█          ▄████████ 
+;  ▄██▀▀▀███▀▀▀██▄ ███    ███ ███   ▀███   ███    ███ ███         ███    ███ 
+;  ███   ███   ███ ███    ███ ███    ███   ███    █▀  ███         ███    █▀  
+;  ███   ███   ███ ███    ███ ███    ███  ▄███▄▄▄     ███         ███        
+;  ███   ███   ███ ███    ███ ███    ███ ▀▀███▀▀▀     ███       ▀███████████ 
+;  ███   ███   ███ ███    ███ ███    ███   ███    █▄  ███                ███ 
+;  ███   ███   ███ ███    ███ ███   ▄███   ███    ███ ███▌    ▄    ▄█    ███ 
+;   ▀█   ███   █▀   ▀██████▀  ████████▀    ██████████ █████▄▄██  ▄████████▀  
+;                                                     ▀                      
+
+;;;-----------------------------------------------------------------------------
+;;; These are the functions defined in the models module of raylib.
+;;;-----------------------------------------------------------------------------
+;;; Draw a line in 3D world space
+(define draw-line-3d
+  (c-lambda (vector3 vector3 color)
+    void "DrawLine3D"))
+
+;;; Draw a point in 3D space, actually a small line
+(define draw-point-3d
+  (c-lambda (vector3 color)
+    void "DrawPoint3D"))
+
+;;; Draw a circle in 3D world space
+(define draw-circle-3d
+  (c-lambda (vector3 float vector3 float color)
+    void "DrawCircle3D"))
+
+;;; Draw cube
+(define draw-cube
+  (c-lambda (vector3 float float float color)
+    void "DrawCube"))
+
+;;; Draw cube (Vector version)
+(define draw-cube-v
+  (c-lambda (vector3 vector3 color)
+    void "DrawCubeV"))
+
+;;; Draw cube wires
+(define draw-cube-wires
+  (c-lambda (vector3 float float float color)
+    void "DrawCubeWires"))
+
+;;; Draw cube wires (Vector version)
+(define draw-cube-wires-v
+  (c-lambda (vector3 vector3 color)
+    void "DrawCubeWiresV"))
+
+;;; Draw cube textured
+(define draw-cube-texture
+  (c-lambda (texture-2d vector3 float float float color)
+    void "DrawCubeTexture"))
+
+;;; Draw sphere
+(define draw-sphere
+  (c-lambda (vector3 float color)
+    void "DrawSphere"))
+
+;;; Draw sphere with extended parameters
+(define draw-sphere-ex
+  (c-lambda (vector3 float int int color)
+    void "DrawSphereEx"))
+
+;;; Draw sphere wires
+(define draw-sphere-wires
+  (c-lambda (vector3 float int int color)
+    void "DrawSphereWires"))
+
+;;; Draw a cylinder/cone
+(define draw-cylinder
+  (c-lambda (vector3 float float float int color)
+    void "DrawCylinder"))
+
+;;; Draw a cylinder/cone wires
+(define draw-cylinder-wires
+  (c-lambda (vector3 float float float int color)
+    void "DrawCylinderWires"))
+
+;;; Draw a plane XZ
+(define draw-plane
+  (c-lambda (vector3 vector2 color)
+    void "DrawPlane"))
+
+;;; Draw a ray line
+(define draw-ray
+  (c-lambda (ray color)
+    void "DrawRay"))
+
+;;; Draw a grid (centered at (0, 0, 0))
+(define draw-grid
+  (c-lambda (int float)
+    void "DrawGrid"))
+
+;;; Draw simple gizmo
+(define draw-gizmo
+  (c-lambda (vector3)
+    void "DrawGizmo"))
+
+;;; Load model from files (meshes and materials)
+(define load-model
+  (c-lambda (char-string)
+    model "LoadModel"))
+
+;;; Load model from generated mesh (default material)
+(define load-model-from-mesh
+  (c-lambda (mesh)
+    model "LoadModelFromMesh"))
+
+;;; Unload model from memory (RAM and/or VRAM)
+(define unload-model
+  (c-lambda (model)
+    void "UnloadModel"))
+
+;;; Load meshes from model file
+(define load-meshes
+  (c-lambda (char-string (pointer int))
+    (pointer mesh) "LoadMeshes"))
+
+;;; Export mesh data to file
+(define export-mesh
+  (c-lambda (mesh char-string)
+    void "ExportMesh"))
+
+;;; Unload mesh from memory (RAM and/or VRAM)
+(define unload-mesh
+  (c-lambda (mesh)
+    void "UnloadMesh"))
+
+;;; Load materials from model file
+(define load-materials
+  (c-lambda (char-string (pointer int))
+    (pointer material) "LoadMaterials"))
+
+;;; Load default material (Supports: DIFFUSE, SPECULAR, NORMAL maps)
+(define load-material-default
+  (c-lambda ()
+    material "LoadMaterialDefault"))
+
+;;; Unload material from GPU memory (VRAM)
+(define unload-material
+  (c-lambda (material)
+    void "UnloadMaterial"))
+
+;;; Set texture for a material map type (MAP_DIFFUSE, MAP_SPECULAR...)
+(define set-material-texture
+  (c-lambda ((pointer material) int texture-2d)
+    void "SetMaterialTexture"))
+
+;;; Set material for a mesh
+(define set-model-mesh-material
+  (c-lambda ((pointer model) int int)
+    void "SetModelMeshMaterial"))
+
+;;; Load model animations from file
+(define load-model-animations
+  (c-lambda (char-string (pointer int))
+    (pointer model-animation) "LoadModelAnimations"))
+
+;;; Update model animation pose
+(define update-model-animation
+  (c-lambda (model model-animation int)
+    void "UpdateModelAnimation"))
+
+;;; Unload animation data
+(define unload-model-animation
+  (c-lambda (model-animation)
+    void "UnloadModelAnimation"))
+
+;;; Check model animation skeleton match
+(define is-model-animation-valid
+  (c-lambda (model model-animation)
+    bool "IsModelAnimationValid"))
+
+;;; Generate polygonal mesh
+(define gen-mesh-poly
+  (c-lambda (int float)
+    mesh "GenMeshPoly"))
+
+;;; Generate plane mesh (with subdivisions)
+(define gen-mesh-plane
+  (c-lambda (float float int int)
+    mesh "GenMeshPlane"))
+
+;;; Generate cuboid mesh
+(define gen-mesh-cube
+  (c-lambda (float float float)
+    mesh "GenMeshCube"))
+
+;;; Generate sphere mesh (standard sphere)
+(define gen-mesh-sphere
+  (c-lambda (float int int)
+    mesh "GenMeshSphere"))
+
+;;; Generate half-sphere mesh (no bottom cap)
+(define gen-mesh-hemi-sphere
+  (c-lambda (float int int)
+    mesh "GenMeshHemiSphere"))
+
+;;; Generate cylinder mesh
+(define gen-mesh-cylinder
+  (c-lambda (float float int)
+    mesh "GenMeshCylinder"))
+
+;;; Generate torus mesh
+(define gen-mesh-torus
+  (c-lambda (float float int int)
+    mesh "GenMeshTorus"))
+
+;;; Generate trefoil knot mesh
+(define gen-mesh-knot
+  (c-lambda (float float int int)
+    mesh "GenMeshKnot"))
+
+;;; Generate heightmap mesh from image data
+(define gen-mesh-heightmap
+  (c-lambda (image vector3)
+    mesh "GenMeshHeightmap"))
+
+;;; Generate cubes-based map mesh from image data
+(define gen-mesh-cubicmap
+  (c-lambda (image vector3)
+    mesh "GenMeshCubicmap"))
+
+;;; Compute mesh bounding box limits
+(define mesh-bounding-box
+  (c-lambda (mesh)
+    bounding-box "MeshBoundingBox"))
+
+;;; Compute mesh tangents
+(define mesh-tangents
+  (c-lambda ((pointer mesh))
+    void "MeshTangents"))
+
+;;; Compute mesh binormals
+(define mesh-binormals
+  (c-lambda ((pointer mesh))
+    void "MeshBinormals"))
+
+;;; Draw a model (with texture if set)
+(define draw-model
+  (c-lambda (model vector3 float color)
+    void "DrawModel"))
+
+;;; Draw a model with extended parameters
+(define draw-model-ex
+  (c-lambda (model vector3 vector3 float vector3 color)
+    void "DrawModelEx"))
+
+;;; Draw a model wires (with texture if set)
+(define draw-model-wires
+  (c-lambda (model vector3 float color)
+    void "DrawModelWires"))
+
+;;; Draw a model wires (with texture if set) with extended parameters
+(define draw-model-wires-ex
+  (c-lambda (model vector3 vector3 float vector3 color)
+    void "DrawModelWiresEx"))
+
+;;; Draw bounding box (wires)
+(define draw-bounding-box
+  (c-lambda (bounding-box color)
+    void "DrawBoundingBox"))
+
+;;; Draw a billboard texture
+(define draw-billboard
+  (c-lambda (camera texture-2d vector3 float color)
+    void "DrawBillboard"))
+
+;;; Draw a billboard texture defined by sourceRec
+(define draw-billboard-rec
+  (c-lambda (camera texture-2d rectangle vector3 float color)
+    void "DrawBillboardRec"))
+
+;;; Detect collision between two spheres
+(define check-collision-spheres
+  (c-lambda (vector3 float vector3 float)
+    bool "CheckCollisionSpheres"))
+
+;;; Detect collision between two bounding boxes
+(define check-collision-boxes
+  (c-lambda (bounding-box bounding-box)
+    bool "CheckCollisionBoxes"))
+
+;;; Detect collision between box and sphere
+(define check-collision-box-sphere
+  (c-lambda (bounding-box vector3 float)
+    bool "CheckCollisionBoxSphere"))
+
+;;; Detect collision between ray and sphere
+(define check-collision-ray-sphere
+  (c-lambda (ray vector3 float)
+    bool "CheckCollisionRaySphere"))
+
+;;; Detect collision between ray and sphere, returns collision point
+(define check-collision-ray-sphere-ex
+  (c-lambda (ray vector3 float (pointer vector3))
+    bool "CheckCollisionRaySphereEx"))
+
+;;; Detect collision between ray and box
+(define check-collision-ray-box
+  (c-lambda (ray bounding-box)
+    bool "CheckCollisionRayBox"))
+
+;;; Get collision info between ray and model
+(define get-collision-ray-model
+  (c-lambda (ray model)
+    ray-hit-info "GetCollisionRayModel"))
+
+;;; Get collision info between ray and triangle
+(define get-collision-ray-triangle
+  (c-lambda (ray vector3 vector3 vector3)
+    ray-hit-info "GetCollisionRayTriangle"))
+
+;;; Get collision info between ray and ground plane (Y-normal plane)
+(define get-collision-ray-ground
+  (c-lambda (ray float)
+    ray-hit-info "GetCollisionRayGround"))
+
+
 ;    ▄████████    ▄█    █▄       ▄████████ ████████▄     ▄████████    ▄████████    ▄████████ 
 ;   ███    ███   ███    ███     ███    ███ ███   ▀███   ███    ███   ███    ███   ███    ███ 
 ;   ███    █▀    ███    ███     ███    ███ ███    ███   ███    █▀    ███    ███   ███    █▀  
@@ -1760,14 +2097,14 @@ c-declare-end
     bool "IsVrSimulatorReady"))
 
 
-   ▄████████ ███    █▄  ████████▄   ▄█   ▄██████▄  
-  ███    ███ ███    ███ ███   ▀███ ███  ███    ███ 
-  ███    ███ ███    ███ ███    ███ ███▌ ███    ███ 
-  ███    ███ ███    ███ ███    ███ ███▌ ███    ███ 
-▀███████████ ███    ███ ███    ███ ███▌ ███    ███ 
-  ███    ███ ███    ███ ███    ███ ███  ███    ███ 
-  ███    ███ ███    ███ ███   ▄███ ███  ███    ███ 
-  ███    █▀  ████████▀  ████████▀  █▀    ▀██████▀  
+;    ▄████████ ███    █▄  ████████▄   ▄█   ▄██████▄  
+;   ███    ███ ███    ███ ███   ▀███ ███  ███    ███ 
+;   ███    ███ ███    ███ ███    ███ ███▌ ███    ███ 
+;   ███    ███ ███    ███ ███    ███ ███▌ ███    ███ 
+; ▀███████████ ███    ███ ███    ███ ███▌ ███    ███ 
+;   ███    ███ ███    ███ ███    ███ ███  ███    ███ 
+;   ███    ███ ███    ███ ███   ▄███ ███  ███    ███ 
+;   ███    █▀  ████████▀  ████████▀  █▀    ▀██████▀  
                                                    
 ;;;-----------------------------------------------------------------------------
 ;;; These are the functions defined in the audio module of raylib.

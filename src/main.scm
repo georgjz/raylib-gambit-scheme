@@ -4,6 +4,16 @@
 ;;; Some game constants 
 (define screen-width 800)
 (define screen-height 450)
+(define CAMERA-PERSPECTIVE 0)
+
+;;; Camera setup
+(define camera (make-camera-3d (make-vector3 0. 5. 10.)
+                               (make-vector3 0. 0. 0.)
+                               (make-vector3 0. 1. 0.)
+                               45.
+                               CAMERA-PERSPECTIVE))
+
+(define cube-position (make-vector3 0. 0. 0.))
 
 ;;; Initialize the game
 (define init-game 
@@ -18,11 +28,17 @@
     (if (not (window-should-close))
         (begin (begin-drawing)
                (clear-background RAYWHITE)
-               (draw-text "(absolute 'power)"
-                          20
-                          20 
-                          30 
-                          DARKGRAY)
+               (begin-mode-3d camera)
+               (draw-cube 
+                cube-position 2. 2. 2. RED)
+               (draw-cube-wires 
+                cube-position 2. 2. 2. MAROON)
+               (draw-grid 10 1.)
+               (end-mode-3d)
+               (draw-text 
+                "Welcome to the third dimension!" 10 40 20 DARKGRAY)
+               (draw-fps 
+                10 10)
                (end-drawing)
                (main-loop)))))
 

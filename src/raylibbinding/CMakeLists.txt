@@ -6,3 +6,5 @@ target_sources( ${PROJECT_NAME}
         raylib-helper.scm 
         raylib-colors.scm 
 )
+
+# add_subdirectory( structs )
