@@ -17,6 +17,7 @@ set( CMAKE_Gambit_COMPILE_OBJECT
 set( CMAKE_Gambit_LINK_EXECUTABLE 
     # "<CMAKE_Gambit_COMPILER> -o <TARGET>_link.c <OBJECTS>"
     "<CMAKE_Gambit_COMPILER> -verbose \
+                             -keep-temp \
                              -cc-options \"-Wl,-rpath,${CMAKE_BINARY_DIR}/extern/raylib/src -lraylib\" \
                              -o <TARGET> \
                              -exe <OBJECTS>"

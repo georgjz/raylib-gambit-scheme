@@ -5,6 +5,7 @@ add_subdirectory( raylibbinding )
 
 target_sources( ${PROJECT_NAME}
     PRIVATE 
-        # raylib.scm
-        main.scm 
+#         raylib.scm
+        # main.scm 
+        tests.scm
 )

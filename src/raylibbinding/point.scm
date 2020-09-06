@@ -33,10 +33,10 @@ ___SCMOBJ SCMOBJ_to_POINT (___PSD ___SCMOBJ src, point *dst, int arg_num)
   else
     {
       ___SCMOBJ car = ___CAR(src);
-      ___SCMOBJ cdr = ___CDR(src);
+      ___SCMOBJ cadr = ___CADR(src);
       ___BEGIN_CFUN_SCMOBJ_TO_INT(car,dst->x,arg_num)
-      ___BEGIN_CFUN_SCMOBJ_TO_INT(cdr,dst->y,arg_num)
-      ___END_CFUN_SCMOBJ_TO_INT(cdr,dst->y,arg_num)
+      ___BEGIN_CFUN_SCMOBJ_TO_INT(cadr,dst->y,arg_num)
+      ___END_CFUN_SCMOBJ_TO_INT(cadr,dst->y,arg_num)
       ___END_CFUN_SCMOBJ_TO_INT(car,dst->x,arg_num)
     }
   return ___err;
@@ -84,10 +84,19 @@ c-declare-end
 ; (define get-mouse (c-lambda () point "get_mouse"))
 (define add-points (c-lambda (point point) point "add_points"))
 (define make-point (c-lambda (int int) point "make_point"))
-(define get-a-point 
-  (c-lambda ()
-    point "get_a_point"))
+(define get-a-point-c 
+  (c-lambda () point "get_a_point"))
+
+(define get-a-point (lambda () (flatten (get-a-point-c))))
+
+(define flatten 
+  (lambda (ls)
+    (cond 
+      ((null? ls) '())
+      ((pair? ls) (append (flatten (car ls))
+                          (flatten (cdr ls))))
+      (else (list ls)))))
 
 (write (get-a-point))
 (newline)
-(write (add-points (get-a-point) (get-a-point)))
+; (write (add-points (get-a-point) (get-a-point)))
