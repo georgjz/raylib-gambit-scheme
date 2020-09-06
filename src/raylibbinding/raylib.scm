@@ -4,12 +4,12 @@
 ;;;-----------------------------------------------------------------------------
 
 ;;; Include raylib header
-; (c-declare #<<c-declare-end
+(c-declare #<<c-declare-end
 
-; #include "raylib.h"
+#include "raylib.h"
 
-; c-declare-end
-; )
+c-declare-end
+)
 
 
 ;    ▄████████     ███        ▄████████ ███    █▄   ▄████████     ███     
@@ -23,12 +23,16 @@
 ;                            ███    ███                                   
 
 ;;; Structure definitions
-; (c-define-type vector2            "Vector2")
+(c-define-type vector2            "Vector2")
+;-------------------------------------------------------------------------------
+; (define make-vector2 
+  ; (c-lambda (float float) vector2 "Vector2 vec = (Vector2){ ___arg1, ___arg2 }; ___return(vec);"))
+;-------------------------------------------------------------------------------
 ; (c-define-type vector2            "Vector2" "VECTOR2_to_SCMOBJ" "SCMOBJ_to_VECTOR2" #f)
-(include "structs/struct-helpers.scm")
-(include "structs/vector2.scm")
-(include "structs/vector3.scm")
-; (c-define-type vector3            "Vector3")
+; (include "structs/struct-helpers.scm")
+; (include "structs/vector2.scm")
+; (include "structs/vector3.scm")
+(c-define-type vector3            "Vector3")
 (c-define-type vector4            "Vector4")
 (c-define-type quaternion         "Quaternion")
 (c-define-type matrix             "Matrix")

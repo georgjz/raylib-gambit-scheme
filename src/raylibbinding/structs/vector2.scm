@@ -6,7 +6,6 @@
 
 Vector2 make_vector_2( float x, float y )
 {
-    // TODO: implement me
     return (Vector2){ x, y };
 }
 

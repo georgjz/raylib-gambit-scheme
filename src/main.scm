@@ -6,8 +6,8 @@
 (define screen-height 450)
 
 ;;; Vector2 testing 
-(define start-vec (make-vector2 0. 0.))
-(define end-vec (make-vector2 800. 450.))
+; (define start-vec (make-vector2 0. 0.))
+; (define end-vec (make-vector2 800. 450.))
 (define line-color (make-color 0 0 255 255))
 
 ;;; Initialize the game
@@ -28,7 +28,7 @@
                           20 
                           30 
                           DARKGRAY)
-               (draw-line-v start-vec end-vec line-color)
+              ;  (draw-line-v start-vec end-vec line-color)
                (end-drawing)
                (main-loop)))))
 
