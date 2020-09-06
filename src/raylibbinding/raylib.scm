@@ -4,12 +4,13 @@
 ;;;-----------------------------------------------------------------------------
 
 ;;; Include raylib header
-(c-declare #<<c-declare-end
+; (c-declare #<<c-declare-end
 
-#include "raylib.h"
+; #include "raylib.h"
 
-c-declare-end
-)
+; c-declare-end
+; )
+
 
 ;    ▄████████     ███        ▄████████ ███    █▄   ▄████████     ███     
 ;   ███    ███ ▀█████████▄   ███    ███ ███    ███ ███    ███ ▀█████████▄ 
@@ -22,7 +23,9 @@ c-declare-end
 ;                            ███    ███                                   
 
 ;;; Structure definitions
-(c-define-type vector2            "Vector2")
+; (c-define-type vector2            "Vector2")
+; (c-define-type vector2            "Vector2" "VECTOR2_to_SCMOBJ" "SCMOBJ_to_VECTOR2" #f)
+(include "structs/vector2.scm")
 (c-define-type vector3            "Vector3")
 (c-define-type vector4            "Vector4")
 (c-define-type quaternion         "Quaternion")
