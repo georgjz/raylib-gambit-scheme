@@ -7,11 +7,11 @@
 (define CAMERA-PERSPECTIVE 0)
 
 ;;; Camera setup
-(define camera (make-camera-3d (make-vector3 0. 5. 10.)
-                               (make-vector3 0. 0. 0.)
-                               (make-vector3 0. 1. 0.)
-                               45.
-                               CAMERA-PERSPECTIVE))
+(define camera (make-camera (make-vector3 0. 5. 10.)
+                            (make-vector3 0. 0. 0.)
+                            (make-vector3 0. 1. 0.)
+                            45.
+                            CAMERA-PERSPECTIVE))
 
 (define cube-position (make-vector3 0. 0. 0.))
 
@@ -40,7 +40,8 @@
                (draw-fps 
                 10 10)
                (end-drawing)
-               (main-loop)))))
+               (main-loop))
+        (write (get-camera-matrix camera)))))
 
 (init-game)
 (main-loop)
