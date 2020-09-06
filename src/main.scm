@@ -40,8 +40,7 @@
                (draw-fps 
                 10 10)
                (end-drawing)
-               (main-loop))
-        (write (get-camera-matrix camera)))))
+               (main-loop)))))
 
 (init-game)
 (main-loop)
