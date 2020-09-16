@@ -10,14 +10,20 @@
 
 # How to build objects 
 set( CMAKE_Gambit_COMPILE_OBJECT
-    "<CMAKE_Gambit_COMPILER> -verbose -o <OBJECT> -c <SOURCE>"
+    "<CMAKE_Gambit_COMPILER> -verbose \
+                             -keep-temp \
+                             -o <OBJECT> \
+                             -c <SOURCE>"
 )
 
 # How to build executables 
 set( CMAKE_Gambit_LINK_EXECUTABLE 
     # "<CMAKE_Gambit_COMPILER> -o <TARGET>_link.c <OBJECTS>"
     "<CMAKE_Gambit_COMPILER> -verbose \
-                             -cc-options \"-Wl,-rpath,${CMAKE_BINARY_DIR}/extern/raylib/src -lraylib\" \
+                             -keep-temp \
+                             -cc-options \"-g -O0 -Wl,-rpath,${CMAKE_BINARY_DIR}/extern/raylib/src -lraylib \
+                                           -Wl,-L${CMAKE_BINARY_DIR}/extern/raylib/src -lraylib \
+                                           -I${CMAKE_BINARY_DIR}/extern/raylib/src\" \
                              -o <TARGET> \
                              -exe <OBJECTS>"
 )

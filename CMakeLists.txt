@@ -22,4 +22,12 @@ add_subdirectory( extern )
 list( APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" )
 enable_language( Gambit )
 add_executable( ${PROJECT_NAME} "" )
+add_dependencies( ${PROJECT_NAME} raylib )
 add_subdirectory( src )
+
+# Copy game assets
+add_custom_target(
+    copy-assets ALL
+    COMMENT "Copying assets"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/assets )
