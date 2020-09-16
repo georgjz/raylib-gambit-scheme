@@ -22,34 +22,34 @@ c-declare-end
 ;  ▄████████▀     ▄████▀     ███    ███ ████████▀  ████████▀     ▄████▀   
 ;                            ███    ███                                   
 
-;;; Structure definitions
-(c-define-type vector2            "Vector2")
-(c-define-type vector3            "Vector3")
-(c-define-type vector4            "Vector4")
-(c-define-type quaternion         "Quaternion")
-(c-define-type matrix             "Matrix")
-(c-define-type color              "Color")
-(c-define-type rectangle          "Rectangle")
+;;; Structure definitions, code is spliced in
+(include    "structs/vector2.scm")
+(include    "structs/vector3.scm")
+(include    "structs/vector4.scm")
+(include    "structs/quaternion.scm")
+(include    "structs/matrix.scm")
+(include    "structs/color.scm")
+(include    "structs/rectangle.scm")
 
-(c-define-type image              "Image")
+(include    "structs/image.scm")
 
-(c-define-type texture            "Texture")
+(include    "structs/texture.scm")
 
-(c-define-type render-texture     "RenderTexture")
-(c-define-type n-patch-info       "NPatchInfo")
+(include    "structs/rendertexture.scm")
+(include    "structs/npatchinfo.scm")
 (c-define-type char-info          "CharInfo")
 (c-define-type font               "Font")
 
-(c-define-type camera             "Camera")
-(c-define-type camera-2d          "Camera2D")
-(c-define-type mesh               "Mesh")
-(c-define-type shader             "Shader")
-(c-define-type material-map       "MaterialMap")
-(c-define-type material           "Material")
-(c-define-type model              "Model")
-(c-define-type transform          "Transform")
-(c-define-type bone-info          "BoneInfo")
-(c-define-type model-animation    "ModelAnimation")
+(include    "structs/camera.scm")
+(include    "structs/camera2d.scm")
+(include    "structs/mesh.scm")
+(include    "structs/shader.scm")
+(include    "structs/materialmap.scm")
+(include    "structs/material.scm")
+(include    "structs/transform.scm")
+(include    "structs/boneinfo.scm")
+(include    "structs/model.scm")
+(include    "structs/modelanimation.scm")
 (c-define-type ray                "Ray")
 (c-define-type ray-hit-info       "RayHitInfo")
 (c-define-type bounding-box       "BoundingBox")
@@ -67,30 +67,9 @@ c-declare-end
 ;;;;;; more convenient. These functions are NOT part of raylib.
 ;-------------------------------------------------------------------------------
 
-;;; These functions create structs found in raylib
-(define make-vector2 
-  (c-lambda (float float) 
-    vector2 "Vector2 vec = (Vector2){ ___arg1, ___arg2 }; 
-             ___return( vec );"))
-
-(define make-vector3
-  (c-lambda (float float float) 
-    vector3 "Vector3 vec = (Vector3){ ___arg1, ___arg2, ___arg3 }; 
-             ___return( vec );"))
-
-(define make-vector4
-  (c-lambda (float float float float) 
-    vector4 "Vector4 vec = (Vector4){ ___arg1, ___arg2, ___arg3, ___arg4 }; 
-             ___return( vec );"))
-
-(define make-quaternion
-  (c-lambda (float float float float) 
-    quaternion "Quaternion quaternion = (Quaternion){ ___arg1, ___arg2, ___arg3, ___arg4 }; 
-                ___return( quaternion );"))
-
-; TODO: figure out the float alignment
-; (define make-matrix 
-  ; (c-lambda ()))
+; ; TODO: figure out the float alignment
+; ; (define make-matrix 
+;   ; (c-lambda ()))
 
 (define make-color
   (lambda (r g b a)
@@ -100,147 +79,29 @@ c-declare-end
                   (arithmetic-shift b 8)
                   a))))
 
-(define make-rectangle
-  (c-lambda (float float float float) 
-    rectangle "Rectangle rect = (Rectangle){ ___arg1, ___arg2, ___arg3, ___arg4 }; 
-               ___return( rect );"))
+; ; TODO: Check if struct conversion/aliases work
 
-(define make-image 
-  (c-lambda ((pointer void) int int int int)
-    image "Image img = (Image){ ___arg1, ___arg2, ___arg3, ___arg4, ___arg5 };
-           ___return( img );"))
-
-; TODO: Check if struct conversion/aliases work
-
-(define make-texture
-  (c-lambda (unsigned-int int int int int)
-    texture "Texture tex = (Texture){ ___arg1, ___arg2, ___arg3, ___arg4, ___arg5 };
-             ___return( tex );"))
-
-(define make-render-texture
-  (c-lambda (unsigned-int texture texture bool)
-    render-texture "RenderTexture tex = (RenderTexture){ ___arg1, ___arg2, ___arg3, ___arg4 };
-                    ___return( tex );"))
-
-(define make-n-patch-info 
-  (c-lambda (rectangle int int int int int)
-    n-patch-info "NPatchInfo npi = (NPatchInfo){ ___arg1, ___arg2, ___arg3, ___arg4, ___arg5, ___arg6 };
-                  ___return( npi );"))
-
-(define make-char-info 
-  (c-lambda (int int int int image)
-    char-info "CharInfo ci = (CharInfo){ ___arg1, ___arg2, ___arg3, ___arg4, ___arg5 };
-               ___return( ci );"))
-
-(define make-font 
-  (c-lambda (int int texture (pointer rectangle) (pointer char-info))
-    font "Font font = (Font){ ___arg1, ___arg2, ___arg3, ___arg4, ___arg5 };
-          ___return( font );"))
-
-(define make-camera
-  (c-lambda (vector3 vector3 vector3 float int)
-    camera "Camera cam = (Camera){ ___arg1, ___arg2, ___arg3, ___arg4, ___arg5 };
-            ___return( cam );"))
-
-(define make-camera-2d
-  (c-lambda (vector2 vector2 float float)
-    camera-2d "Camera2D cam = (Camera2D){ ___arg1, ___arg2, ___arg3, ___arg4 };
-               ___return( cam );"))
-
-; TODO: fix types
-; (define make-mesh 
-;   (c-lambda (int 
-;              int 
-;              (pointer float)
-;              (pointer float)
-;              (pointer float)
-;              (pointer float)
-;              (pointer float)
-;              (pointer unsigned-int32)
-;              (pointer int8)
-;              (pointer float)
-;              (pointer float)
-;              (pointer int)
-;              (pointer float)
-;              unsigned-int
-;              (pointer unsigned-int))
-;     mesh "Mesh mesh = (Mesh){ ___arg1, ___arg2, ___arg3, ___arg4, ___arg5 
-;                               ___arg6, ___arg7, ___arg8, ___arg9, ___arg10
-;                               ___arg11, ___arg12, ___arg13, ___arg14, ___arg15 };
-;           ___return( mesh );"))
-
-(define make-shader 
-  (c-lambda (unsigned-int (pointer int))
-    shader "Shader shader = (Shader){ ___arg1, ___arg2 };
-            ___return( shader );"))
-
-(define make-material-map 
-  (c-lambda (texture color float)
-    material-map "MaterialMap mat = (MaterialMap){ ___arg1, ___arg2, ___arg3 };
-                  ___return( mat );"))
-
-(define make-material 
-  (c-lambda (shader (pointer material-map) (pointer float))
-    material "Material mat = (Material){ ___arg1, ___arg2, ___arg3 };
-              ___return( mat );"))
-
-(define make-model 
-  (c-lambda (matrix           ; transform
-             int              ; mesh count
-             (pointer mesh)   ; mesh array
-             int              ; material count 
-             (pointer material)
-             (pointer int)
-             int 
-             (pointer bone-info)
-             (pointer transform))
-    model "Model model = (Model){ ___arg1, ___arg2, ___arg3, ___arg4, ___arg5, ___arg6, ___arg7, ___arg8, ___arg9 };
-           ___return( model );"))
-
-(define make-transform 
-  (c-lambda (vector3 quaternion vector3)
-    transform "Transform trans = (Transform){ ___arg1, ___arg2, ___arg3 };
-               ___return( trans );"))
-
-(define make-bone-info
-  (c-lambda (char-string int)
-    bone-info "BoneInfo bone = (BoneInfo){ ___arg1, ___arg2 };
-               ___return( bone );"))
-
-(define make-ray
-  (c-lambda (vector3 vector3) 
-    ray "Ray ray = (Ray){ ___arg1, ___arg2 };
-         ___return( ray );"))
-
-(define make-ray-hit-info
-  (c-lambda (bool float vector3 vector3)
-    ray-hit-info "RayHitInfo rhi = (RayHitInfo){ ___arg1, ___arg2, ___arg3, ___arg4 };
-                  ___return( rhi );"))
-
-(define make-bounding-box
-  (c-lambda (vector3 vector3) 
-    bounding-box "BoundingBox box = (BoundingBox){ ___arg1, ___arg2 };
-                  ___return( box );"))
-
-(define make-wave
-  (c-lambda (int int int int (pointer void)) 
-    wave "Wave wave = (Wave){ ___arg1, ___arg2, ___arg3, ___arg4, ___arg5 };
-          ___return( wave );"))
-
-(define make-sound
-  (c-lambda (unsigned-int audio-stream) 
-    sound "Sound sound = (Sound){ ___arg1, ___arg2 };
-           ___return( sound );"))
-
-(define make-music
-  (c-lambda (int (pointer void) bool unsigned-int audio-stream)
-    music "Music music = (Music){ ___arg1, ___arg2, ___arg3, ___arg4, ___arg5 };
-           ___return( music );"))
-
-(define make-audio-stream
-  (c-lambda (unsigned-int unsigned-int unsigned-int (pointer r-audio-buffer)) 
-    audio-stream "AudioStream stream = (AudioStream){ ___arg1, ___arg2, ___arg3, ___arg4 };
-                  ___return( stream );"))
+; ; TODO: fix types
+; ; (define make-mesh 
+; ;   (c-lambda (int 
+; ;              int 
+; ;              (pointer float)
+; ;              (pointer float)
+; ;              (pointer float)
+; ;              (pointer float)
+; ;              (pointer float)
+; ;              (pointer unsigned-int32)
+; ;              (pointer int8)
+; ;              (pointer float)
+; ;              (pointer float)
+; ;              (pointer int)
+; ;              (pointer float)
+; ;              unsigned-int
+; ;              (pointer unsigned-int))
+; ;     mesh "Mesh mesh = (Mesh){ ___arg1, ___arg2, ___arg3, ___arg4, ___arg5 
+; ;                               ___arg6, ___arg7, ___arg8, ___arg9, ___arg10
+; ;                               ___arg11, ___arg12, ___arg13, ___arg14, ___arg15 };
+; ;           ___return( mesh );"))
 
 ; TODO:
 ; (define make-vr-device-info
@@ -563,7 +424,7 @@ c-declare-end
 
 ;;; Returns a Color from HSV values
 (define color-from-hsv
-  (c-lambda (vector3)
+  (c-lambda (float float float)
     color "ColorFromHSV"))
 
 ;;; Returns a Color struct from hexadecimal value
@@ -1194,9 +1055,9 @@ c-declare-end
 ;;; These are the functions defined in the texture module of raylib.
 ;;;-----------------------------------------------------------------------------
 ;;; Load image from file into CPU memory (RAM)
-; (define load-image
-;   (c-lambda (char-string)
-;     image "LoadImage"))
+(define load-image
+  (c-lambda (char-string)
+    image "LoadImage"))
 
 ; ;;; Load image from Color array data (RGBA - 32bit)
 ; (define load-image-ex
@@ -1259,9 +1120,9 @@ c-declare-end
 ;     image "GenImageGradientRadial"))
 
 ; ;;; Generate image: checked
-; (define gen-image-checked
-;   (c-lambda (int int int int color color)
-;     image "GenImageChecked"))
+(define gen-image-checked
+  (c-lambda (int int int int color color)
+    image "GenImageChecked"))
 
 ; ;;; Generate image: white noise
 ; (define gen-image-white-noise
@@ -1489,14 +1350,14 @@ c-declare-end
 ;     void "ImageDrawTextEx"))
 
 ; ;;; Load texture from file into GPU memory (VRAM)
-; (define load-texture
-;   (c-lambda (char-string)
-;     texture-2d "LoadTexture"))
+(define load-texture
+  (c-lambda (char-string)
+    texture "LoadTexture"))
 
 ; ;;; Load texture from image data
-; (define load-texture-from-image
-;   (c-lambda (image)
-;     texture-2d "LoadTextureFromImage"))
+(define load-texture-from-image
+  (c-lambda (image)
+    texture "LoadTextureFromImage"))
 
 ; ;;; Load cubemap from image, multiple image cubemap layouts supported
 ; (define load-texture-cubemap
@@ -1509,9 +1370,9 @@ c-declare-end
 ;     render-texture-2d "LoadRenderTexture"))
 
 ; ;;; Unload texture from GPU memory (VRAM)
-; (define unload-texture
-;   (c-lambda (texture-2d)
-;     void "UnloadTexture"))
+(define unload-texture
+  (c-lambda (texture)
+    void "UnloadTexture"))
 
 ; ;;; Unload render texture from GPU memory (VRAM)
 ; (define unload-render-texture
@@ -1559,9 +1420,9 @@ c-declare-end
 ;     void "SetTextureWrap"))
 
 ; ;;; Draw a Texture2D
-; (define draw-texture
-;   (c-lambda (texture-2d int int color)
-;     void "DrawTexture"))
+(define draw-texture
+  (c-lambda (texture int int color)
+    void "DrawTexture"))
 
 ; ;;; Draw a Texture2D with position defined as Vector2
 ; (define draw-texture-v
