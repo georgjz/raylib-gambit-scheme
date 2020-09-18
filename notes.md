@@ -11,3 +11,4 @@
 
 -[ ] Test Material dereference function more thoroughly
 -[ ] Find a better way for creating pointers (`int`, `char`, etc.)
+-[ ] Benchmark raymath vs. pure Scheme implementation

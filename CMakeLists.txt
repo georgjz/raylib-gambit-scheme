@@ -10,6 +10,9 @@ endif()
 set( CMAKE_C_COMPILER gcc )
 set( CMAKE_CXX_COMPILER g++ )
 
+# Building the Scheme examples is off by default
+option( BUILD_SCM_EXAMPLES "Build the Scheme code examples with Gambit Scheme." OFF )
+
 # Give the project a name
 project( raylib-gambit-scheme
     VERSION 0.1.0
@@ -31,3 +34,7 @@ add_custom_target(
     COMMENT "Copying assets"
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     ${CMAKE_CURRENT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/assets )
+
+if( ${BUILD_SCM_EXAMPLES} )
+   add_subdirectory( examples ) 
+endif()
