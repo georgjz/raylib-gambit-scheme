@@ -7,4 +7,5 @@ target_sources( ${PROJECT_NAME}
     PRIVATE 
         raylib.scm 
         raylib-colors.scm 
+        raylib-consts.scm
 )
