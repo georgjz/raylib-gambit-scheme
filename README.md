@@ -48,7 +48,7 @@ This should output the following window:
 ## Known Bugs and Future Features
 
 * In the build commands above, I explicitly tell CMake to use `gcc`; I have used both `gcc` and `clang` successfully to build all code in this repository. But since Gambit Scheme itself is built with `gcc`, I prefer to keep it consistent. **I want to add an option to let users choose between compilers**.
-* **This code is not tested on Windows and OSX**. I have only tested this code as well as the CMake files on Arch Linux; cross-platform support is planned.
+* **This code is not tested on Windows ~~and OSX~~**. I have only tested this code as well as the CMake files on Arch Linux; cross-platform support is planned. It has also been [successfully build on OSX][https://github.com/georgjz/raylib-gambit-scheme/issues/1].
 * The binding to raylib in `src/raylibbinding/raylib.scm` acts like a "single file header"; i.e., *all* functions of raylib are always bound. **I plan to modify the CMake files to make sure only used functions/modules are actually bound (and built).** I want this binding to follow the module design of raylib.
 * **The Texture module is not working**. The code is there, but I have commented it out, there are some bugs I need to fix (converting between different lengths of (pointers to) `int`s is the probable cause).
 * **The variadic functions are not included**. These are mostly small functions for tracing and text formatting.
